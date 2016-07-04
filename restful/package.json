@@ -1,10 +1,10 @@
 {
-  "name": "xs-crawler",
+  "name": "xs-restful",
   "version": "1.0.0",
-  "description": "xs-crawler",
+  "description": "xs-restful",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node start.js"
   },
   "author": "tobe",
   "repository": {
@@ -13,8 +13,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^0.20.0",
     "mongoose": "^4.5.3",
-    "request": "^2.72.0"
+    "restify": "^4.1.1"
   }
 }
