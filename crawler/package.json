@@ -7,5 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "tobe",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhenhua32/xiaoshuo"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "request": "^2.72.0"
+  }
 }
