@@ -1,4 +1,4 @@
-const server = require('./api/main');
+const server = require('./api/z');
 const db = require('./model/connect');
 
 server.listen(8080, function () {

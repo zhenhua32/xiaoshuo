@@ -9,10 +9,5 @@ server.use(function (req, res, next) {
   return next();
 });
 
-server.get('/', function(req, res, next) {
-    res.send('hello');
-    next();
-})
-
 module.exports = server;
 
