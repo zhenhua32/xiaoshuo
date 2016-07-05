@@ -1,7 +1,7 @@
 const restify = require('restify');
 
 let server = restify.createServer({
-  name: 'img-server',
+  name: 'xs-server',
   version: '1.0.0',
 });
 
