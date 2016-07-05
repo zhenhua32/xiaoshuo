@@ -4,9 +4,6 @@ const errhelper = require('../help/err');
 const helper = require('../help/help');
 
 server.put('/novel', function (req, res, next) {
-    console.log(req.params);
-    console.log(req.query)
-    console.log(req.body)
     let params = {
         title: req.params.title,
         author: req.params.author
@@ -23,7 +20,6 @@ server.put('/novel', function (req, res, next) {
     });
     return next();
 });
-
 
 
 module.exports = server;
