@@ -13,8 +13,9 @@ let chapterSchema = new Schema({
         type: String,
         trim: true
     },
-    form: {
-        type: Schema.Types.ObjectId
+    novel: {
+        type: Schema.Types.ObjectId,
+        ref: 'Novel'
     }
 }, options)
 

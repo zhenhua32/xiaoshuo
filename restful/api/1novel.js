@@ -1,12 +1,13 @@
 let server = require('./0before');
-const Novel = rquire('../model/novel');
+const Novel = require('../model/novel');
 const errhelper = require('../help/err');
 const helper = require('../help/help');
 
-server.put('./novel', function (req, res, next) {
+server.put('/novel', function (req, res, next) {
+    console.log(req.params)
     let params = {
         title: req.params.title,
-        author: req.params.auhor
+        author: req.params.author
     }
     if (!helper.novelExist(params, res)) return next();
 
@@ -14,13 +15,16 @@ server.put('./novel', function (req, res, next) {
     novel.save(function (err, document) {
         if (err) errhelper.json500(err, res);
         else res.json({
-            msg: 'ok'
+            msg: 'ok',
+            id: document._id
         })
-    })
-
+    });
+    return next();
 });
 
-server.
+server.post('/novel/:id', function(req, res, next) {
+
+})
 
 
 module.exports = server;

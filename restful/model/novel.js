@@ -16,7 +16,10 @@ let novelSchema = new Schema({
         trim: true,
         default: 'nobody'
     },
-    type: [String],
+    type: [{
+        type: String,
+        trim: true
+    }],
     body: [{
         type: Schema.Types.ObjectId,
         ref: 'Chapter'
