@@ -17,7 +17,7 @@ let chapterSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Novel'
     }
-}, options)
+}, options);
 
 
 let Chapter = mongoose.model('Chapter', chapterSchema, 'chapter');

@@ -28,7 +28,7 @@ server.get('/chapter/:id', function (req, res, next) {
         if (err) errhelper.json500(err, res);
         else {
             if (!document) {
-                errhelper.json404(new Error('no such document'), res);
+                errhelper.json404(new Error('no such chapter'), res);
             } else {
                 res.json(document)
             }
@@ -45,7 +45,7 @@ server.post('/chapter/:id', function(req, res, next) {
         if(err) errhelper.json500(err, res);
         else {
             if(!document) {
-                errhelper.json404(new Error('not such document'), res);
+                errhelper.json404(new Error('not such chapter'), res);
             } else {
                 if(p.index) document.index = p.index;
                 if(p.body) document.body = p.body;
