@@ -37,30 +37,38 @@ server.get('/novel/:id', function (req, res, next) {
 
 /**
  * 拆分之后虽然烦了点, 但或许细分更简单些, 也更明确
- * 估计要复制粘帖好多
+ * 估计要复制粘帖好多, 所以我把内容拆到model定义文件中了
+ * 造了几个静态方法, 虽然我看不出有什么需要重复使用的地方
+ * 主要是错误处理太烦了, 把核心代码都淹没了
+ * 不过我这边也真逗, 有了个:id, 还不如直接写到data中呢
  */
 server.post('/novel/:id/title', function (req, res, next) {
     let p = req.params;
     if (!p.title) return next();
 
-    // Novel.findById(p.id, function (err, document) {
-    //     if (err) errhelper.json500(err, res);
-    //     else {
-    //         if (!document) {
-    //             errhelper.json404(new Error('not such novel'), res);
-    //         } else {
-    //             document.title = p.title;
-    //             document.save(function (err) {
-    //                 if (err) errhelper.json500(err, res);
-    //                 else res.json({
-    //                     msg: 'ok'
-    //                 })
-    //             })
-    //         }
-    //     }
-    // });
-    Novel.updateTitle(p.id, p.title, res);
+    Novel.updateTitle(p, res);
+
     return next();
+});
+
+server.post('/novel/:id/author', function(req, res, next) {
+    let p = req.params;
+    if(!p.author) return next();
+
+    Novel.updateAuthor(p, res);
+
+    return next();
+});
+/**
+ * put 代表增加, 表示push
+ */
+server.put('/novel/:id/body', function(req, res, next) {
+    let p = req.params;
+    if(!p.bodyid) return next();
+
+    Novel.pushBody(p, res);
+
+    return  next();
 });
 
 

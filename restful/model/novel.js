@@ -29,14 +29,17 @@ let novelSchema = new Schema({
 
 }, options);
 
-novelSchema.statics.updateTitle = function (id, title,res, callback) {
-    this.findById(id, function (err, document) {
+/**
+ * params.id && params.title
+ */
+novelSchema.statics.updateTitle = function (params, res, callback) {
+    this.findById(params.id, function (err, document) {
         if (err) errhelper.json500(err, res);
         else {
             if (!document) {
                 errhelper.json404(new Error('not such novel'), res);
             } else {
-                document.title = p.title;
+                document.title = params.title;
                 document.save(function (err) {
                     if (err) errhelper.json500(err, res);
                     else res.json({
@@ -45,7 +48,51 @@ novelSchema.statics.updateTitle = function (id, title,res, callback) {
                 })
             }
         }
-        if(typeof callback == 'function') callback(document);
+        if (typeof callback == 'function') callback(document);
+    })
+}
+/** 
+ * params.id && params.author
+ */
+novelSchema.statics.updateAuthor = function (params, res, callback) {
+    this.findById(params.id, function (err, document) {
+        if (err) errhelper.json500(err, res);
+        else {
+            if (!document) {
+                errhelper.json404(new Error('not such novel'), res);
+            } else {
+                document.author = params.author;
+                document.save(function (err) {
+                    if (err) errhelper.json500(err, res);
+                    else res.json({
+                        msg: 'ok'
+                    })
+                })
+            }
+        }
+        if (typeof callback == 'function') callback(document);
+    })
+}
+/** 
+ * params.id && params.bodyid
+ */
+novelSchema.statics.pushBody = function (params, res, callback) {
+    this.findById(params.id, function (err, document) {
+        if (err) errhelper.json500(err, res);
+        else {
+            if (!document) {
+                errhelper.json404(new Error('not such novel'), res);
+            } else {
+                document.body.push(params.bodyid);
+                document.save(function (err) {
+                    if (err) errhelper.json500(err, res);
+                    else res.json({
+                        msg: 'ok'
+                    })
+                })
+            }
+        }
+        if (typeof callback == 'function') callback(document);
     })
 }
 
