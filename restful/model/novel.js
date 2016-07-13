@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const errhelper = require('../help/err');
+const helper = require('../help/help');
 
 let Schema = mongoose.Schema;
 let options = {
@@ -26,6 +28,26 @@ let novelSchema = new Schema({
     }]
 
 }, options);
+
+novelSchema.statics.updateTitle = function (id, title,res, callback) {
+    this.findById(id, function (err, document) {
+        if (err) errhelper.json500(err, res);
+        else {
+            if (!document) {
+                errhelper.json404(new Error('not such novel'), res);
+            } else {
+                document.title = p.title;
+                document.save(function (err) {
+                    if (err) errhelper.json500(err, res);
+                    else res.json({
+                        msg: 'ok'
+                    })
+                })
+            }
+        }
+        if(typeof callback == 'function') callback(document);
+    })
+}
 
 let Novel = mongoose.model('Novel', novelSchema, 'novel');
 
