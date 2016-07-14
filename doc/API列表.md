@@ -17,6 +17,6 @@ put  | /novel/:id/body         |bodyid
 ---- |----- |-----
 put  | /chapter                |index body novel                   
 get  | /chapter/:id            |无                       
-post | /chapter/:id            |index || body  ||novel                       
+post | /chapter/:id            |index  body  novel                       
 
 
