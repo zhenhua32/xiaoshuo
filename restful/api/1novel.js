@@ -6,7 +6,8 @@ const helper = require('../help/help');
 server.put('/novel', function (req, res, next) {
     let params = {
         title: req.params.title,
-        author: req.params.author
+        author: req.params.author,
+        link: req.params.link
     }
     if (!helper.novelExist(params, res)) return next();
 

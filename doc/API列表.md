@@ -4,7 +4,7 @@
 
 方法  | 链接 | 变量
 ---- |----- |------
-put  | /novel                  |title author                              
+put  | /novel                  |title author link                         
 get  | /novel/:id              |无                            
 post | /novel/:id/title        |title                
 post | /novel/:id/author       |author    

@@ -22,6 +22,10 @@ let novelSchema = new Schema({
         type: String,
         trim: true
     }],
+    link: {
+        type: String,
+        trim: true
+    },
     body: [{
         type: Schema.Types.ObjectId,
         ref: 'Chapter'

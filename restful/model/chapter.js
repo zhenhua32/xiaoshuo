@@ -9,7 +9,15 @@ let chapterSchema = new Schema({
     index: {
         type: Number
     },
+    title: {
+        type: String,
+        trim: true
+    },
     body: {
+        type: String,
+        trim: true
+    },
+    link: {
         type: String,
         trim: true
     },

@@ -7,6 +7,7 @@ const helper = require('../help/help');
 server.put('/chapter', function (req, res, next) {
     let params = {
         index: req.params.index,
+        title: req.params.title,
         body: req.params.body,
         novel: req.params.novel
     }
