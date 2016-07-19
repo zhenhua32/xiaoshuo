@@ -25,7 +25,7 @@ function nE(params, res) {
 function cE(params, res) {
     let exist = true;
     // 注意 index 要从1开始, 因为 !0 是true
-    if (!params.index) {
+    if (params !=0 && !params.index) {
         e.json400(new Error('index not exist'), res);
         exist = false;
     }

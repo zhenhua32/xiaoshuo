@@ -41,6 +41,7 @@ walk.getbody(shuku, true)
         }
       })
     }
+    console.log('done');
 
   }, function (reason) {
     console.log(reason);

@@ -11,11 +11,13 @@ server.put('/chapter', function (req, res, next) {
         body: req.params.body,
         novel: req.params.novel
     }
-    if (helper.chapterExist(params)) return next();
+    if (!helper.chapterExist(params, res)) return next();
 
     let chapter = new Chapter(params);
     chapter.save(function (err, document) {
-        if (err) errhelper.json500(err, res);
+        if (err) {
+            errhelper.json500(err, res);
+        }
         else res.json({
             msg: 'ok',
             id: document._id
@@ -38,21 +40,21 @@ server.get('/chapter/:id', function (req, res, next) {
     return next();
 });
 
-server.post('/chapter/:id', function(req, res, next) {
+server.post('/chapter/:id', function (req, res, next) {
     let p = req.params;
-    if(!p.index || !p.body || !p.novel) return next();
+    if (!p.index || !p.body || !p.novel) return next();
 
-    Chapter.findById(p.id, function(err, document) {
-        if(err) errhelper.json500(err, res);
+    Chapter.findById(p.id, function (err, document) {
+        if (err) errhelper.json500(err, res);
         else {
-            if(!document) {
+            if (!document) {
                 errhelper.json404(new Error('not such chapter'), res);
             } else {
-                if(p.index) document.index = p.index;
-                if(p.body) document.body = p.body;
-                if(p.novel) document.novel = p.novel;
-                document.save(function(err) {
-                    if(err) errhelper.json500(err, res);
+                if (p.index) document.index = p.index;
+                if (p.body) document.body = p.body;
+                if (p.novel) document.novel = p.novel;
+                document.save(function (err) {
+                    if (err) errhelper.json500(err, res);
                     else res.json({
                         msg: 'ok'
                     })

@@ -15,7 +15,7 @@ put  | /novel/:id/body         |bodyid
 
 方法  | 链接 | 变量
 ---- |----- |-----
-put  | /chapter                |index body novel                   
+put  | /chapter                |index title body novel                   
 get  | /chapter/:id            |无                       
 post | /chapter/:id            |index  body  novel                       
 

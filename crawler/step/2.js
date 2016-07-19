@@ -8,7 +8,7 @@ const walk = require('../app/walk.js');
  */
 
 let novel = 'http://www.69shu.com/txt/8894.htm';
-let id = '578c594780a55d5810855bd3';
+let id = '578d800efe54bea03079357a';
 
 let get = new Promise(function (resolve, reject) {
   walk.getbody(novel, true)
@@ -52,7 +52,10 @@ get.then(function (result) {
   function recursion() {
     if (index < array.length) {
       setTimeout(function () {
-
+        // index 从1开始
+        saveChapter(array[index].url, index+1, id);
+        index++;
+        recursion();
       }, 1000);
     } else {
       console.log('done')
@@ -67,7 +70,7 @@ get.then(function (result) {
   console.log(reason);
 })
 
-function saveChapter(url) {
+function saveChapter(url, index, novelid) {
   walk.getbody(url, true)
     .then(function (result) {
       let $ = cheerio.load(result);
@@ -77,6 +80,27 @@ function saveChapter(url) {
 
       let body = $('body > div.warpper > table > tbody > tr > td > div.yd_text2').text();
       body = body.replace(/(\s)+/ig, '\r\n').trim();
+
+      let op = {
+        url: 'http://127.0.0.1:8008/chapter',
+        method: 'PUT',
+        header: {
+        },
+        form: {
+          index: index,
+          title: title,
+          body: body,
+          novel: novelid
+        }
+      }
+
+      request(op, function (err, response, body) {
+        if (err) console.log(err);
+        if (response.statusCode != 200) {
+          console.log(response.statusCode);
+          console.log(index + 'failed');
+        }
+      })
 
 
     }, function (reason) {
