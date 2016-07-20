@@ -13,6 +13,13 @@ walk.options = {
     }
 }
 
+/**
+ * resolve: html body, type: String
+ * reject: error,      type: Error
+ * @param {string} url - The link start with http|https
+ * @param {boolean} isgbk - The html page is gbk? true: false
+ * @retrun {Promise}
+ */
 function getbody(url, isgbk) {
     let body = '';
     walk.options.url = url;
@@ -51,7 +58,110 @@ function getbody(url, isgbk) {
 
 }
 
+/**
+ * only useful in www.69shu.com
+ * resolve: 'ok',      type: String,
+ * reject: error,      type: Error
+ */
+function saveChapter(url, index, novelid) {
+
+    let promise = new Promise(function (resolve, reject) {
+        walk.getbody(url, true)
+            .then(function (result) {
+                let $ = cheerio.load(result);
+                $('script').remove();
+
+                let title = $('body > div.warpper > table > tbody > tr > td > h1').text();
+                title = title.trim();
+
+                let body = $('body > div.warpper > table > tbody > tr > td > div.yd_text2').text();
+                body = body.replace(/(\s)+/ig, '\r\n').trim();
+
+                let op = {
+                    url: 'http://127.0.0.1:8008/chapter',
+                    method: 'PUT',
+                    header: {
+                    },
+                    form: {
+                        index: index,
+                        title: title,
+                        body: body,
+                        novel: novelid
+                    }
+                }
+
+                request(op, function (err, response, body) {
+                    if (err){
+                        reject(err);
+                    } 
+                    if (response.statusCode != 200) {
+                        reject(new Error(response.statusCode));
+                    } else {
+                        resolve('ok');
+                    }
+                })
+
+
+            }, function (reason) {
+                reject(reason);
+            });
+    });
+
+    return promise;
+}
+
+/**
+ * general vesion for saveChapter
+ * @param {function} get - ($) => {title, body}
+ * @return {Promise}
+ */
+function saveChapterGeneral(url, index, novelid, get) {
+
+    let promise = new Promise(function (resolve, reject) {
+        walk.getbody(url, true)
+            .then(function (result) {
+                let $ = cheerio.load(result);
+                $('script').remove();
+
+                let info = get($);
+                let title = info.title;
+                let body = info.body;
+
+                let op = {
+                    url: 'http://127.0.0.1:8008/chapter',
+                    method: 'PUT',
+                    header: {
+                    },
+                    form: {
+                        index: index,
+                        title: title,
+                        body: body,
+                        novel: novelid
+                    }
+                }
+
+                request(op, function (err, response, body) {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (response.statusCode != 200) {
+                        reject(new Error(response.statusCode));
+                    } else {
+                        resolve('ok');
+                    }
+                })
+
+
+            }, function (reason) {
+                reject(reason);
+            });
+    });
+
+    return promise;
+}
+
 walk.getbody = getbody;
+walk.saveChapter = saveChapter;
 
 module.exports = walk;
 

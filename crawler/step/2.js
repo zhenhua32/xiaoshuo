@@ -53,7 +53,7 @@ get.then(function (result) {
     if (index < array.length) {
       setTimeout(function () {
         // index 从1开始
-        saveChapter(array[index].url, index+1, id);
+        saveChapter(array[index].url, index + 1, id);
         index++;
         recursion();
       }, 1000);
@@ -74,6 +74,7 @@ function saveChapter(url, index, novelid) {
   walk.getbody(url, true)
     .then(function (result) {
       let $ = cheerio.load(result);
+      $('script').remove();
 
       let title = $('body > div.warpper > table > tbody > tr > td > h1').text();
       title = title.trim();
