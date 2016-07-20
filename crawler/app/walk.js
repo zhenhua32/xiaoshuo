@@ -58,57 +58,6 @@ function getbody(url, isgbk) {
 
 }
 
-/**
- * only useful in www.69shu.com
- * resolve: 'ok',      type: String,
- * reject: error,      type: Error
- */
-function saveChapter(url, index, novelid) {
-
-    let promise = new Promise(function (resolve, reject) {
-        walk.getbody(url, true)
-            .then(function (result) {
-                let $ = cheerio.load(result);
-                $('script').remove();
-
-                let title = $('body > div.warpper > table > tbody > tr > td > h1').text();
-                title = title.trim();
-
-                let body = $('body > div.warpper > table > tbody > tr > td > div.yd_text2').text();
-                body = body.replace(/(\s)+/ig, '\r\n').trim();
-
-                let op = {
-                    url: 'http://127.0.0.1:8008/chapter',
-                    method: 'PUT',
-                    header: {
-                    },
-                    form: {
-                        index: index,
-                        title: title,
-                        body: body,
-                        novel: novelid
-                    }
-                }
-
-                request(op, function (err, response, body) {
-                    if (err){
-                        reject(err);
-                    } 
-                    if (response.statusCode != 200) {
-                        reject(new Error(response.statusCode));
-                    } else {
-                        resolve('ok');
-                    }
-                })
-
-
-            }, function (reason) {
-                reject(reason);
-            });
-    });
-
-    return promise;
-}
 
 /**
  * general vesion for saveChapter
@@ -160,8 +109,8 @@ function saveChapterGeneral(url, index, novelid, get) {
     return promise;
 }
 
+
 walk.getbody = getbody;
-walk.saveChapter = saveChapter;
 
 module.exports = walk;
 
