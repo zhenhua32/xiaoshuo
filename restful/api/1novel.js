@@ -61,7 +61,7 @@ server.post('/novel/:id/author', function(req, res, next) {
     return next();
 });
 /**
- * put 代表增加, 表示push
+ * put 代表增加, 表示push, 添加 chapter 的 id
  */
 server.put('/novel/:id/body', function(req, res, next) {
     let p = req.params;

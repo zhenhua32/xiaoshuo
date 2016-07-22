@@ -16,52 +16,36 @@ let ids = JSON.parse(
   })
 ).ids;
 
-function getChapterList(url, id) {
-  let promise = new Promise(function (resolve, reject) {
-    walk.getbody(url, true)
-      .then(function (result) {
-        let $ = cheerio.load(result);
-        let ul = $('body > div.warpper > div:nth-child(5) > ul:nth-child(2)');
-        let li = $('li', ul);
-
-        let list = [];
-
-        for (let i = 0; i < li.length; i++) {
-          let title = $('a', li[i]).text();
-          let url = 'http://www.69shu.com' + $('a', li[i]).attr('href');
-          list.push({
-            title: title,
-            url: url
-          })
-        }
-
-        resolve(array);
-      }, function (reason) {
-        reject(reason);
-      })
-  });
-
-  return promise;
-}
-
 let array = [];
 
-for (let i = 0; i < links.length; i++) {
-  getChapterList(links[i], ids[i])
-    .then(function (result) {
-      array.push({
-        id: ids[i],
-        list: result
-      });
-
-      if( i == links.length -1) {
-        for(let j=0; j<array.length; j++) {
-          console.log(array[j].list)
-        }
-      }
-
-    }, function(reason) {
-      console.log('    '+reason);
+let master = [];
+master[0] = _69shu.getChapterList(links[0])
+for (let i = 1; i < links.length + 1; i++) {
+  master[i] = master[i - 1].then(function (result) {
+    array.push({
+      id: ids[i],
+      list: result
     })
+
+    if (i < links.length) {
+      process.stdout.write(i / links.length + '\033[0G');
+      return _69shu.getChapterList(links[i]);
+    } else {
+      process.stdout.write('\n' + i / links.length);
+      fs.writeFileSync('./info/69_3.json', JSON.stringify({
+        array: array
+      }))
+    }
+  }, function (reason) {
+    console.log(reason);
+    array.push({
+      id: ids[i],
+      list: [],
+      link: links[i]
+    })
+  })
 }
+
+
+
 

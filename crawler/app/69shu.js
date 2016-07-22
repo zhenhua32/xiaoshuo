@@ -5,6 +5,7 @@ const walk = require('./walk.js');
 let _69shu = {};
 
 /**
+ * 保存小说到数据库
  * only useful in www.69shu.com
  * resolve: object array,  type: Array
  * reject: error,          type: Error
@@ -72,6 +73,7 @@ function saveNovel(url) {
 }
 
 /**
+ * 保存章节到数据库
  * only useful in www.69shu.com
  * resolve: 'ok',      type: String,
  * reject: error,      type: Error
@@ -127,6 +129,9 @@ function saveChapter(url, index, novelid) {
   return promise;
 }
 
+/**
+ * 获得小说的介绍页面的链接, 从数据库中
+ */
 function getNovelLink(id) {
   let promise = new Promise(function (resolve, reject) {
     let link = 'http://127.0.0.1:8008/novel/' + id;
@@ -147,8 +152,40 @@ function getNovelLink(id) {
   return promise;
 }
 
+/**
+ * 获得小说章节的链接数组, 类型为标题和链接
+ */
+function getChapterList(url) {
+  let promise = new Promise(function (resolve, reject) {
+    walk.getbody(url, true)
+      .then(function (result) {
+        let $ = cheerio.load(result);
+        let ul = $('body > div.warpper > div:nth-child(5) > ul:nth-child(2)');
+        let li = $('li', ul);
+
+        let list = [];
+
+        for (let i = 0; i < li.length; i++) {
+          let title = $('a', li[i]).text();
+          let url = 'http://www.69shu.com' + $('a', li[i]).attr('href');
+          list.push({
+            title: title,
+            url: url
+          })
+        }
+
+        resolve(list);
+      }, function (reason) {
+        reject(reason);
+      })
+  });
+
+  return promise;
+}
+
 
 _69shu.saveNovel = saveNovel;
 _69shu.saveChapter = saveChapter;
 _69shu.getNovelLink = getNovelLink;
+_69shu.getChapterList = getChapterList;
 module.exports = _69shu;

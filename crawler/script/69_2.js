@@ -25,6 +25,7 @@ for (let i = 0; i < ids.length; i++) {
 }
 
 // 如果链接有模式可循, 就可以避免去网页上爬取
+// 链接有两种, 一种是小说介绍页面, 另一种是小说的章节列表页面
 function callback(links) {
   let intro = links;
   let chapterList = [];
