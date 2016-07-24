@@ -60,6 +60,7 @@ Restful 服务器主要是负责提供数据存储
 
 * crawler 部分
   * 正在进行网站选择
+  * 已经爬取50部小说
 * restful 部分
   * 基础模型 novel 已搭建
   * 基础模型 chapter 已搭建

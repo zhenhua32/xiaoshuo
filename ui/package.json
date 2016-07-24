@@ -1,0 +1,17 @@
+{
+  "name": "xs-ui",
+  "version": "1.0.0",
+  "description": "xs-ui",
+  "main": "index.js",
+  "scripts": {},
+  "author": "tobe",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhenhua32/xiaoshuo"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1"
+  }
+}

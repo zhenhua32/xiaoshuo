@@ -1,6 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "editor.wrappingColumn": 100,
-    "html.format.wrapLineLength": 60,
+    "html.format.wrapLineLength": 70,
     "editor.tabSize": 2
 }

@@ -24,7 +24,6 @@ function save(novel, next) {
         recursion();
       }, 1000);
     } else {
-      console.log('done')
       next();
     }
   }
@@ -35,7 +34,7 @@ function save(novel, next) {
 let count = 0;
 function next() {
   console.log('start next')
-  if(count < array.length) {
+  if(count < array.length-1) {
     count ++;
     save(array[count], next);
   } else {

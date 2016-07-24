@@ -72,7 +72,7 @@ server.put('/novel/:id/body', function(req, res, next) {
     return  next();
 });
 
-server.get('/novel/all')
+
 
 module.exports = server;
 
