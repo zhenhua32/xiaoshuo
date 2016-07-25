@@ -1,7 +1,8 @@
 const e = require('./err');
 let helper = {
     novelExist: nE,
-    chapterExist: cE
+    chapterExist: cE,
+    testId: tI
 };
 
 function nE(params, res) {
@@ -25,7 +26,7 @@ function nE(params, res) {
 function cE(params, res) {
     let exist = true;
     // 注意 index 要从1开始, 因为 !0 是true
-    if (params !=0 && !params.index) {
+    if (params != 0 && !params.index) {
         e.json400(new Error('index not exist'), res);
         exist = false;
     }
@@ -43,6 +44,17 @@ function cE(params, res) {
     }
 
     return exist;
+}
+
+function tI(params, res) {
+    let success = false;
+    if (/[a-z0-9]{24}/.test(params.id)) {
+        success = true;
+    } else {
+        e.json400(new Error('id is not satisfied'), res);
+    }
+
+    return success;
 }
 
 module.exports = helper;
