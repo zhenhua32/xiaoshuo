@@ -1,17 +1,25 @@
-var HelloWorld = React.createClass({
-  render: function () {
+class LikeButton extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      liked: false
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState({liked: !this.state.liked});
+  }
+  render() {
+    const text = this.state.liked ? 'liked' : 'haven\'t liked';
     return (
-      <p>
-        Hello, <input type="text" placeholder="Your name here" />!
-        It is {this.props.date.toTimeString() }
-      </p>
+      <div onClick={this.handleClick}>
+        You {text} this. Click to toggle.
+      </div>
     );
   }
-});
+}
 
-setInterval(function () {
-  ReactDOM.render(
-    <HelloWorld date={new Date() } />,
-    document.getElementById('example')
-  );
-}, 500);
+ReactDOM.render(
+  <LikeButton />,
+  document.getElementById('example')
+);
