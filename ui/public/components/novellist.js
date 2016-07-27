@@ -11,15 +11,16 @@ var Novelbox = React.createClass({
   getInitialState: function () {
     return { data: [] };
   },
-  componentDidMount: function() {
+  componentDidMount: function () {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       cache: false,
-      success: function(data) {
-        this.setState({data: data});
+      success: function (data) {
+        if (this.isMounted())
+          this.setState({ data: data });
       }.bind(this),
-      error: function(xhr, status, err) {
+      error: function (xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
@@ -72,4 +73,4 @@ ReactDOM.render(
   document.getElementById('example')
 )
 
-module.exports = Novellist;
+module.exports = Novelbox;

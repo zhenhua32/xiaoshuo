@@ -26,6 +26,54 @@ server.put('/chapter', function (req, res, next) {
     return next();
 });
 
+server.get('/chapter/all', function (req, res, next) {
+    let q = req.query;
+    let limit = 50;
+    let skip = 0;
+    let id = '';
+    if (!q.novelid) {
+        errhelper.json400(new Error('novel id not exist'), res);
+    } else {
+        id = q.novelid;
+    }
+    if (q.limit) limit = Number(q.limit);
+    if (q.skip) skip = Number(q.skip);
+
+    Chapter.find({ novel: id })
+        .select('-body')
+        .skip(skip)
+        .limit(limit)
+        .exec(function (err, documents) {
+            if (err) errhelper.json500(err, res);
+            else if (!documents) {
+                errhelper.json404(new Error('not find'), res);
+            } else {
+                res.json(documents);
+            }
+        });
+
+    return next();
+
+})
+
+server.get('chapter/count', function (req, res, next) {
+    let q = req.query;
+    let id = q.novelid ? q.novelid : '';
+
+    let query = id? Chapter.count({novel:id}): Chapter.count({});
+
+    query.exec(function(err, count) {
+        if(err) errhelper.json500(err, res);
+        else {
+            res.json({
+                count: count
+            })
+        }
+    })
+
+    return next();
+})
+
 server.get('/chapter/find', function (req, res, next) {
     let q = req.query;
     let novelid = '';
@@ -41,7 +89,7 @@ server.get('/chapter/find', function (req, res, next) {
         .limit(1)
         .exec(function (err, documents) {
             if (err) errhelper.json500(err, res);
-            else if(!documents) {
+            else if (!documents) {
                 errhelper.json404(new Error('not find'), res);
             }
             else {

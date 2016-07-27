@@ -26,13 +26,13 @@ server.get('/novel/all', function (req, res, next) {
     let q = req.query;
     let limit = 50;
     let skip = 0;
-    if (q.limit) limit = q.limit;
-    if (q.skip) skip = q.skip;
+    if (q.limit) limit = Number(q.limit);
+    if (q.skip) skip = Number(q.skip);
 
     Novel.find({})
         .sort('createdAt')
-        .skip(Number(skip))
-        .limit(Number(limit))
+        .skip(skip)
+        .limit(limit)
         .exec(function (err, documents) {
             if (err) errhelper.json500(err, res);
             else {
