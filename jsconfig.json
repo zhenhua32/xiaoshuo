@@ -3,6 +3,8 @@
     "target": "ES6"
   },
   "exclude": [
-    "crawler/node_modules"
+    "crawler/node_modules",
+	"restful/node_modules",
+	"ui/node_modules"
   ]
 }

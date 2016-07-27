@@ -1,14 +1,6 @@
-// var React = require('react');
-// var ReactDOM = require('react-dom');
-
-var data = [{
-  title: 'nihao'
-}, {
-    title: 'guoqu'
-  }, {
-    title: 'laizi'
-  }]
-
+require("babel-polyfill");
+var React = require('react');
+var ReactDOM = require('react-dom');
 
 /**
  * -Novelbox
@@ -57,9 +49,9 @@ var Novellist = React.createClass({
       )
     })
     return (
-      <novel>
+      <div>
         {nodes}
-      </novel>
+      </div>
     )
   }
 });
@@ -80,4 +72,4 @@ ReactDOM.render(
   document.getElementById('example')
 )
 
-
+module.exports = Novellist;
