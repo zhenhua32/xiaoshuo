@@ -26,8 +26,8 @@ var Novelbox = React.createClass({
   },
   render: function () {
     return (
-      <div >
-        <h1>novel list</h1>
+      <div className="novellist">
+        <h1>小说列表</h1>
         <Novellist data={this.state.data}/>
       </div>
     )
@@ -39,12 +39,12 @@ var Novellist = React.createClass({
     var nodes = this.props.data.map(function (node) {
       var props = {
         author: node.author,
-        // title: node.title,
-        key: node._id
+        title: node.title,
+        key: node._id,
+        id: node._id
       };
       return (
         <Novel {...props}>
-          {node.title}
         </Novel>
       )
     })
@@ -59,8 +59,8 @@ var Novellist = React.createClass({
 var Novel = React.createClass({
   render: function () {
     return (
-      <div>
-        <h2>{this.props.children}</h2>
+      <div id={this.props.id}>
+        <h2>{this.props.title}</h2>
         <h3>{this.props.author}</h3>
       </div>
     )

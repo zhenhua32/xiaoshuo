@@ -4,17 +4,19 @@ const walk = require('../app/walk.js');
 const _69shu = require('../app/69shu.js');
 const fs = require('fs');
 
-let links = JSON.parse(
+let list = JSON.parse(
   fs.readFileSync('./info/69_2.json', {
     encoding: 'utf8'
   })
-).chapterList;
+);
 
-let ids = JSON.parse(
-  fs.readFileSync('./info/69_1.json', {
-    encoding: 'utf8'
-  })
-).ids;
+let links = [];
+let ids = [];
+
+for(let i=0; i<list.length; i++) {
+  links.push(list[i].chapterList);
+  ids.push(list[i].id);
+}
 
 let array = [];
 

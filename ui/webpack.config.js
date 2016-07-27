@@ -1,5 +1,8 @@
+const webpack = require('webpack');
+
 module.exports = {
-  entry: ['babel-polyfill', './public/components/novellist.js'],
+  // entry: ['babel-polyfill', './public/components/novellist.js'],
+  entry: ['babel-polyfill', './public/components/chapter.js'],
   output: {
     path: './public/build',
     filename: 'app.bundle.js'
@@ -10,5 +13,18 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel-loader',
     }]
-  }
+  },
+  // plugins: [
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     mangle: {
+  //       except: ['$super', '$', 'exports', 'require']
+  //   },
+  //     compress: {
+  //       warnings: false,
+  //     },
+  //     output: {
+  //       comments: false,
+  //     },
+  //   }),
+  // ]
 };

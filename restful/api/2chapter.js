@@ -26,7 +26,33 @@ server.put('/chapter', function (req, res, next) {
     return next();
 });
 
-server.get('/chapter/:id', function (req, res, next) {
+server.get('/chapter/find', function (req, res, next) {
+    let q = req.query;
+    let novelid = '';
+    let index = 1;
+    if (!q.novelid) {
+        errhelper.json400(new Error('novelid not exist'), res);
+    } else {
+        novelid = q.novelid;
+    }
+    if (q.index) index = Number(q.index);
+
+    Chapter.find({ novel: novelid, index: index })
+        .limit(1)
+        .exec(function (err, documents) {
+            if (err) errhelper.json500(err, res);
+            else if(!documents) {
+                errhelper.json404(new Error('not find'), res);
+            }
+            else {
+                res.json(documents[0]);
+            }
+        });
+
+    return next();
+})
+
+server.get('/chapter/id/:id', function (req, res, next) {
     Chapter.findById(req.params.id, function (err, document) {
         if (err) errhelper.json500(err, res);
         else {
@@ -40,7 +66,7 @@ server.get('/chapter/:id', function (req, res, next) {
     return next();
 });
 
-server.post('/chapter/:id', function (req, res, next) {
+server.post('/chapter/id/:id', function (req, res, next) {
     let p = req.params;
     if (!p.index || !p.body || !p.novel) return next();
 

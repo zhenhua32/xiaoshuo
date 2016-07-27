@@ -4,7 +4,10 @@ var ReactDOM = require('react-dom');
 
 
 /**
- * 
+ * -ChapterBox
+ * --ChapterHead
+ * --ChapterBody
+ * --ChapterFoot
  */
 var ChapterBox = React.createClass({
   getInitialState: function () {
@@ -25,9 +28,9 @@ var ChapterBox = React.createClass({
   },
   render: function () {
     return (
-      <div>
-        <ChapterHead title={this.props.title} author={this.props.author}/>
-        <ChapterBody />
+      <div className="chapter">
+        <ChapterHead title={this.state.data.title} author={this.state.data.author}/>
+        <ChapterBody body={this.state.data.body} />
         <ChapterFoot />
       </div>
     )
@@ -37,7 +40,7 @@ var ChapterBox = React.createClass({
 var ChapterHead = React.createClass({
   render: function () {
     return (
-      <div>
+      <div className="chapterhead">
         <h1>{this.props.title}</h1>
         <h2>{this.props.author}</h2>
       </div>
@@ -47,11 +50,18 @@ var ChapterHead = React.createClass({
 
 var ChapterBody = React.createClass({
   render: function () {
-    var ps = this.props.body.split('/r/n').map(function (data) {
-      return (
-        <p>data</p>
-      )
-    })
+    var ps = [];
+    var key = 0;
+    if (this.props.body) {
+      ps = this.props.body.split('\r\n').map(function (data) {
+        key++;
+        return (
+          <ChapterP key={key}>{data}</ChapterP>
+        )
+      });
+      console.log(ps.length)
+    }
+
     return (
       <div>
         {ps}
@@ -60,12 +70,20 @@ var ChapterBody = React.createClass({
   }
 })
 
+var ChapterP = React.createClass({
+  render: function() {
+    return (
+      <p>{this.props.children}</p>
+    )
+  }
+})
+
 var ChapterFoot = React.createClass({
   render: function () {
     return (
-      <div>
-        <span>上一页</span>
-        <span>下一页</span>
+      <div className="chapterfoot">
+        <span><button>上一页</button></span>
+        <span><button>下一页</button></span>
       </div>
     )
   }
@@ -73,6 +91,6 @@ var ChapterFoot = React.createClass({
 
 
 ReactDOM.render(
-  <ChapterBox url="http://localhost:8008/chapter?id=&index=1" />,
+  <ChapterBox url="http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1" />,
   document.getElementById('example')
 )

@@ -8127,12 +8127,13 @@
 	var ReactDOM = __webpack_require__(330);
 
 	/**
-	 * -Novelbox
-	 * --Novellist
-	 * ---Novel
+	 * -ChapterBox
+	 * --ChapterHead
+	 * --ChapterBody
+	 * --ChapterFoot
 	 */
-	var Novelbox = React.createClass({
-	  displayName: 'Novelbox',
+	var ChapterBox = React.createClass({
+	  displayName: 'ChapterBox',
 
 	  getInitialState: function getInitialState() {
 	    return { data: [] };
@@ -8153,55 +8154,28 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'chapter' },
+	      React.createElement(ChapterHead, { title: this.state.data.title, author: this.state.data.author }),
+	      React.createElement(ChapterBody, { body: this.state.data.body }),
+	      React.createElement(ChapterFoot, null)
+	    );
+	  }
+	});
+
+	var ChapterHead = React.createClass({
+	  displayName: 'ChapterHead',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'chapterhead' },
 	      React.createElement(
 	        'h1',
 	        null,
-	        'novel list'
+	        this.props.title
 	      ),
-	      React.createElement(Novellist, { data: this.state.data })
-	    );
-	  }
-	});
-
-	var Novellist = React.createClass({
-	  displayName: 'Novellist',
-
-	  render: function render() {
-	    var nodes = this.props.data.map(function (node) {
-	      var props = {
-	        author: node.author,
-	        // title: node.title,
-	        key: node._id
-	      };
-	      return React.createElement(
-	        Novel,
-	        props,
-	        node.title
-	      );
-	    });
-	    return React.createElement(
-	      'div',
-	      null,
-	      nodes
-	    );
-	  }
-	});
-
-	var Novel = React.createClass({
-	  displayName: 'Novel',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
 	      React.createElement(
 	        'h2',
-	        null,
-	        this.props.children
-	      ),
-	      React.createElement(
-	        'h3',
 	        null,
 	        this.props.author
 	      )
@@ -8209,9 +8183,74 @@
 	  }
 	});
 
-	ReactDOM.render(React.createElement(Novelbox, { url: 'http://localhost:8008/novel/all' }), document.getElementById('example'));
+	var ChapterBody = React.createClass({
+	  displayName: 'ChapterBody',
 
-	module.exports = Novellist;
+	  render: function render() {
+	    var ps = [];
+	    var key = 0;
+	    if (this.props.body) {
+	      ps = this.props.body.split('\r\n').map(function (data) {
+	        key++;
+	        return React.createElement(
+	          ChapterP,
+	          { key: key },
+	          data
+	        );
+	      });
+	      console.log(ps.length);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      ps
+	    );
+	  }
+	});
+
+	var ChapterP = React.createClass({
+	  displayName: 'ChapterP',
+
+	  render: function render() {
+	    return React.createElement(
+	      'p',
+	      null,
+	      this.props.children
+	    );
+	  }
+	});
+
+	var ChapterFoot = React.createClass({
+	  displayName: 'ChapterFoot',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'chapterfoot' },
+	      React.createElement(
+	        'span',
+	        null,
+	        React.createElement(
+	          'button',
+	          null,
+	          '上一页'
+	        )
+	      ),
+	      React.createElement(
+	        'span',
+	        null,
+	        React.createElement(
+	          'button',
+	          null,
+	          '下一页'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	ReactDOM.render(React.createElement(ChapterBox, { url: 'http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1' }), document.getElementById('example'));
 
 /***/ },
 /* 299 */

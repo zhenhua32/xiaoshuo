@@ -19,4 +19,10 @@ put  | /chapter                |index title body novel
 get  | /chapter/:id            |无                       
 post | /chapter/:id            |index  body  novel                       
 
+检索的时候如果资源不存在, 应该返回404
 
+状态响应
+* 200: 正常
+* 400: 请求的参数错误
+* 404: 资源不存在
+* 500: 服务器内部错误
