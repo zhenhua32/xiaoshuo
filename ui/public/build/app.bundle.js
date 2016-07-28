@@ -8122,135 +8122,80 @@
 
 	'use strict';
 
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	__webpack_require__(1);
 	var React = __webpack_require__(299);
 	var ReactDOM = __webpack_require__(330);
+	// react components
+	var NovelListBox = __webpack_require__(469);
+	var ChapterBox = __webpack_require__(470);
+	var ChapterListBox = __webpack_require__(471);
+	// event
+	var EventEmitter = __webpack_require__(472);
 
+	var MyEmitter = function (_EventEmitter) {
+	  _inherits(MyEmitter, _EventEmitter);
+
+	  function MyEmitter() {
+	    _classCallCheck(this, MyEmitter);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(MyEmitter).apply(this, arguments));
+	  }
+
+	  return MyEmitter;
+	}(EventEmitter);
+
+	var emitter = new MyEmitter();
 	/**
-	 * -ChapterBox
-	 * --ChapterHead
-	 * --ChapterBody
-	 * --ChapterFoot
+	 * 
 	 */
-	var ChapterBox = React.createClass({
-	  displayName: 'ChapterBox',
-
-	  getInitialState: function getInitialState() {
-	    return { data: [] };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    $.ajax({
-	      url: this.props.url,
-	      dataType: 'json',
-	      cache: false,
-	      success: function (data) {
-	        this.setState({ data: data });
-	      }.bind(this),
-	      error: function (xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'chapter' },
-	      React.createElement(ChapterHead, { title: this.state.data.title, author: this.state.data.author }),
-	      React.createElement(ChapterBody, { body: this.state.data.body }),
-	      React.createElement(ChapterFoot, null)
-	    );
-	  }
-	});
-
-	var ChapterHead = React.createClass({
-	  displayName: 'ChapterHead',
+	var App = React.createClass({
+	  displayName: 'App',
 
 	  render: function render() {
+	    var props1 = {
+	      url: this.props.novel_list_url,
+	      emitter: this.props.emitter
+	    };
+	    var props2 = {
+	      url: this.props.chapter_list_url,
+	      emitter: this.props.emitter
+	    };
+	    var props3 = {
+	      url: this.props.chapter_url,
+	      emitter: this.props.emitter
+	    };
 	    return React.createElement(
 	      'div',
-	      { className: 'chapterhead' },
+	      { className: 'app' },
 	      React.createElement(
-	        'h1',
-	        null,
-	        this.props.title
+	        'div',
+	        { className: 'left' },
+	        React.createElement(NovelListBox, props1),
+	        React.createElement(ChapterListBox, props2)
 	      ),
 	      React.createElement(
-	        'h2',
-	        null,
-	        this.props.author
+	        'div',
+	        { className: 'rigth' },
+	        React.createElement(ChapterBox, props3)
 	      )
 	    );
 	  }
 	});
 
-	var ChapterBody = React.createClass({
-	  displayName: 'ChapterBody',
+	var props = {
+	  emitter: emitter,
+	  novel_list_url: 'http://localhost:8008/novel/all',
+	  chapter_list_url: 'http://localhost:8008/chapter/all?novelid=579078a1b7116d9c34b8d06b&limit=50&skip=0',
+	  chapter_url: 'http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1'
+	};
 
-	  render: function render() {
-	    var ps = [];
-	    var key = 0;
-	    if (this.props.body) {
-	      ps = this.props.body.split('\r\n').map(function (data) {
-	        key++;
-	        return React.createElement(
-	          ChapterP,
-	          { key: key },
-	          data
-	        );
-	      });
-	      console.log(ps.length);
-	    }
-
-	    return React.createElement(
-	      'div',
-	      null,
-	      ps
-	    );
-	  }
-	});
-
-	var ChapterP = React.createClass({
-	  displayName: 'ChapterP',
-
-	  render: function render() {
-	    return React.createElement(
-	      'p',
-	      null,
-	      this.props.children
-	    );
-	  }
-	});
-
-	var ChapterFoot = React.createClass({
-	  displayName: 'ChapterFoot',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'chapterfoot' },
-	      React.createElement(
-	        'span',
-	        null,
-	        React.createElement(
-	          'button',
-	          null,
-	          '上一页'
-	        )
-	      ),
-	      React.createElement(
-	        'span',
-	        null,
-	        React.createElement(
-	          'button',
-	          null,
-	          '下一页'
-	        )
-	      )
-	    );
-	  }
-	});
-
-	ReactDOM.render(React.createElement(ChapterBox, { url: 'http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1' }), document.getElementById('example'));
+	ReactDOM.render(React.createElement(App, props), document.getElementById('example'));
 
 /***/ },
 /* 299 */
@@ -29158,6 +29103,657 @@
 	var ReactMount = __webpack_require__(461);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 469 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(1);
+	var React = __webpack_require__(299);
+	var ReactDOM = __webpack_require__(330);
+
+	/**
+	 * -NovelListbox
+	 * --Novellist
+	 * ---Novel
+	 */
+	var NovelListBox = React.createClass({
+	  displayName: 'NovelListBox',
+
+	  loadData: function loadData() {
+	    $.ajax({
+	      url: this.props.url,
+	      dataType: 'json',
+	      cache: false,
+	      success: function (data) {
+	        if (this.isMounted()) this.setState({ data: data });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  getInitialState: function getInitialState() {
+	    return { data: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.url) this.loadData();
+	    this.props.emitter.on('novel-click', function (id) {});
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'novellist' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        '小说列表'
+	      ),
+	      React.createElement(Novellist, { data: this.state.data, emitter: this.props.emitter })
+	    );
+	  }
+	});
+
+	var Novellist = React.createClass({
+	  displayName: 'Novellist',
+
+	  render: function render() {
+	    var emitter = this.props.emitter;
+	    var nodes = this.props.data.map(function (node) {
+	      var props = {
+	        author: node.author,
+	        title: node.title,
+	        key: node._id,
+	        id: node._id,
+	        emitter: emitter
+	      };
+	      return React.createElement(Novel, props);
+	    });
+	    return React.createElement(
+	      'div',
+	      null,
+	      nodes
+	    );
+	  }
+	});
+
+	var Novel = React.createClass({
+	  displayName: 'Novel',
+
+	  handleClick: function handleClick() {
+	    var id = this.props.id;
+	    this.props.emitter.emit('novel-click', id);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { id: this.props.id, onClick: this.handleClick },
+	      React.createElement(
+	        'p',
+	        null,
+	        this.props.title
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        this.props.author
+	      )
+	    );
+	  }
+	});
+
+	// ReactDOM.render(
+	//   <NovelListBox  url="http://localhost:8008/novel/all" />,
+	//   document.getElementById('example')
+	// )
+
+	module.exports = NovelListBox;
+
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(1);
+	var React = __webpack_require__(299);
+	var ReactDOM = __webpack_require__(330);
+
+	/**
+	 * -ChapterBox
+	 * --ChapterHead
+	 * --ChapterBody
+	 * ---ChapterP
+	 * --ChapterFoot
+	 */
+	var ChapterBox = React.createClass({
+	  displayName: 'ChapterBox',
+
+	  loadData: function loadData() {
+	    $.ajax({
+	      url: this.props.url,
+	      dataType: 'json',
+	      cache: false,
+	      success: function (data) {
+	        if (this.isMounted()) this.setState({ data: data });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  getInitialState: function getInitialState() {
+	    return { data: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.url) this.loadData();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'chapter' },
+	      React.createElement(ChapterHead, { title: this.state.data.title }),
+	      React.createElement(ChapterBody, { body: this.state.data.body }),
+	      React.createElement(ChapterFoot, null)
+	    );
+	  }
+	});
+
+	var ChapterHead = React.createClass({
+	  displayName: 'ChapterHead',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'chapterhead' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        this.props.title
+	      ),
+	      React.createElement('h2', null)
+	    );
+	  }
+	});
+
+	var ChapterBody = React.createClass({
+	  displayName: 'ChapterBody',
+
+	  render: function render() {
+	    var nodes = [];
+	    var key = 0;
+	    if (this.props.body) {
+	      nodes = this.props.body.split('\r\n').map(function (data) {
+	        key++;
+	        return React.createElement(
+	          ChapterP,
+	          { key: key },
+	          data
+	        );
+	      });
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      nodes
+	    );
+	  }
+	});
+
+	var ChapterP = React.createClass({
+	  displayName: 'ChapterP',
+
+	  render: function render() {
+	    return React.createElement(
+	      'p',
+	      null,
+	      this.props.children
+	    );
+	  }
+	});
+
+	var ChapterFoot = React.createClass({
+	  displayName: 'ChapterFoot',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'chapterfoot' },
+	      React.createElement(
+	        'span',
+	        null,
+	        React.createElement(
+	          'button',
+	          null,
+	          '上一页'
+	        )
+	      ),
+	      React.createElement(
+	        'span',
+	        null,
+	        React.createElement(
+	          'button',
+	          null,
+	          '下一页'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	// ReactDOM.render(
+	//   <ChapterBox url="http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1" />,
+	//   document.getElementById('example')
+	// )
+
+	module.exports = ChapterBox;
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(1);
+	var React = __webpack_require__(299);
+	var ReactDOM = __webpack_require__(330);
+
+	/**
+	 * -ChapterListBox
+	 * --ChapterList
+	 * ---ChapterNode
+	 */
+
+	var ChapterListBox = React.createClass({
+	  displayName: 'ChapterListBox',
+
+	  loadData: function loadData() {
+	    $.ajax({
+	      url: this.props.url,
+	      dataType: 'json',
+	      cache: false,
+	      success: function (data) {
+	        if (this.isMounted()) this.setState({ data: data });
+	      }.bind(this),
+	      error: function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
+	  },
+	  getInitialState: function getInitialState() {
+	    return { data: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.url) this.loadData();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'chapterlist' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        '章节目录'
+	      ),
+	      React.createElement(ChapterList, { data: this.state.data })
+	    );
+	  }
+	});
+
+	var ChapterList = React.createClass({
+	  displayName: 'ChapterList',
+
+	  render: function render() {
+	    var nodes = [];
+	    if (this.props.data) {
+	      nodes = this.props.data.map(function (node) {
+	        var props = {
+	          key: 'index' + node.index,
+	          title: node.title
+	        };
+	        return React.createElement(ChapterNode, props);
+	      });
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      nodes
+	    );
+	  }
+	});
+
+	var ChapterNode = React.createClass({
+	  displayName: 'ChapterNode',
+
+	  render: function render() {
+	    return React.createElement(
+	      'p',
+	      null,
+	      this.props.title
+	    );
+	  }
+	});
+
+	// ReactDOM.render(
+	//   <ChapterListBox
+	//     url="http://localhost:8008/chapter/all?novelid=579078a1b7116d9c34b8d06b&limit=50&skip=0"/>,
+	//   document.getElementById('example')
+	// )
+
+
+	module.exports = ChapterListBox;
+
+/***/ },
+/* 472 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function(n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n))
+	    throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+
+	EventEmitter.prototype.emit = function(type) {
+	  var er, handler, len, args, i, listeners;
+
+	  if (!this._events)
+	    this._events = {};
+
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error ||
+	        (isObject(this._events.error) && !this._events.error.length)) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      } else {
+	        // At least give some kind of context to the user
+	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+	        err.context = er;
+	        throw err;
+	      }
+	    }
+	  }
+
+	  handler = this._events[type];
+
+	  if (isUndefined(handler))
+	    return false;
+
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        args = Array.prototype.slice.call(arguments, 1);
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    args = Array.prototype.slice.call(arguments, 1);
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++)
+	      listeners[i].apply(this, args);
+	  }
+
+	  return true;
+	};
+
+	EventEmitter.prototype.addListener = function(type, listener) {
+	  var m;
+
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  if (!this._events)
+	    this._events = {};
+
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener)
+	    this.emit('newListener', type,
+	              isFunction(listener.listener) ?
+	              listener.listener : listener);
+
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;
+	  else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);
+	  else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' +
+	                    'leak detected. %d listeners added. ' +
+	                    'Use emitter.setMaxListeners() to increase limit.',
+	                    this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+	EventEmitter.prototype.once = function(type, listener) {
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  var fired = false;
+
+	  function g() {
+	    this.removeListener(type, g);
+
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+
+	  g.listener = listener;
+	  this.on(type, g);
+
+	  return this;
+	};
+
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function(type, listener) {
+	  var list, position, length, i;
+
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  if (!this._events || !this._events[type])
+	    return this;
+
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+
+	  if (list === listener ||
+	      (isFunction(list.listener) && list.listener === listener)) {
+	    delete this._events[type];
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener ||
+	          (list[i].listener && list[i].listener === listener)) {
+	        position = i;
+	        break;
+	      }
+	    }
+
+	    if (position < 0)
+	      return this;
+
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.removeAllListeners = function(type) {
+	  var key, listeners;
+
+	  if (!this._events)
+	    return this;
+
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0)
+	      this._events = {};
+	    else if (this._events[type])
+	      delete this._events[type];
+	    return this;
+	  }
+
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+
+	  listeners = this._events[type];
+
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else if (listeners) {
+	    // LIFO order
+	    while (listeners.length)
+	      this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+
+	  return this;
+	};
+
+	EventEmitter.prototype.listeners = function(type) {
+	  var ret;
+	  if (!this._events || !this._events[type])
+	    ret = [];
+	  else if (isFunction(this._events[type]))
+	    ret = [this._events[type]];
+	  else
+	    ret = this._events[type].slice();
+	  return ret;
+	};
+
+	EventEmitter.prototype.listenerCount = function(type) {
+	  if (this._events) {
+	    var evlistener = this._events[type];
+
+	    if (isFunction(evlistener))
+	      return 1;
+	    else if (evlistener)
+	      return evlistener.length;
+	  }
+	  return 0;
+	};
+
+	EventEmitter.listenerCount = function(emitter, type) {
+	  return emitter.listenerCount(type);
+	};
+
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+
 
 /***/ }
 /******/ ]);

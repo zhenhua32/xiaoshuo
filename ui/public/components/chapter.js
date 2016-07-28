@@ -10,10 +10,7 @@ var ReactDOM = require('react-dom');
  * --ChapterFoot
  */
 var ChapterBox = React.createClass({
-  getInitialState: function () {
-    return { data: [] };
-  },
-  componentDidMount: function () {
+  loadData: function () {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -26,6 +23,13 @@ var ChapterBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+  },
+  getInitialState: function () {
+    return { data: [] };
+  },
+  componentDidMount: function () {
+    if (this.props.url) this.loadData();
+
   },
   render: function () {
     return (
@@ -90,9 +94,9 @@ var ChapterFoot = React.createClass({
 })
 
 
-ReactDOM.render(
-  <ChapterBox url="http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1" />,
-  document.getElementById('example')
-)
+// ReactDOM.render(
+//   <ChapterBox url="http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1" />,
+//   document.getElementById('example')
+// )
 
 module.exports = ChapterBox;

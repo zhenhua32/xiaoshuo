@@ -9,10 +9,7 @@ var ReactDOM = require('react-dom');
  */
 
 var ChapterListBox = React.createClass({
-  getInitialState: function () {
-    return { data: [] };
-  },
-  componentDidMount: function () {
+  loadData: function () {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -26,11 +23,21 @@ var ChapterListBox = React.createClass({
       }.bind(this)
     });
   },
+  getInitialState: function () {
+    return { data: [] };
+  },
+  componentDidMount: function () {
+    if (this.props.url) this.loadData();
+    
+  },
   render: function () {
-    <div className="chapterlist">
-      <h1>章节目录</h1>
-      <ChapterList data={this.state.data} />
-    </div>
+    return (
+      <div className="chapterlist">
+        <h1>章节目录</h1>
+        <ChapterList data={this.state.data} />
+      </div>
+    )
+
   }
 })
 
@@ -40,7 +47,7 @@ var ChapterList = React.createClass({
     if (this.props.data) {
       nodes = this.props.data.map(function (node) {
         var props = {
-          key: 'index'+node.index,
+          key: 'index' + node.index,
           title: node.title
         }
         return (
@@ -58,17 +65,18 @@ var ChapterList = React.createClass({
 })
 
 var ChapterNode = React.createClass({
-  return: function() {
+  render: function () {
     return (
       <p>{this.props.title}</p>
     )
   }
 })
 
-ReactDOM.render(
-  <ChapterListBox url="http://localhost:8008/chapter/all?novelid=&limit=50&skip=0"/>,
-  document.getElementById('example')
-)
+// ReactDOM.render(
+//   <ChapterListBox
+//     url="http://localhost:8008/chapter/all?novelid=579078a1b7116d9c34b8d06b&limit=50&skip=0"/>,
+//   document.getElementById('example')
+// )
 
 
 module.exports = ChapterListBox;

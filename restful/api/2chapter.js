@@ -25,7 +25,9 @@ server.put('/chapter', function (req, res, next) {
     })
     return next();
 });
-
+/**
+ * ?novelid=&limit=&skip=
+ */
 server.get('/chapter/all', function (req, res, next) {
     let q = req.query;
     let limit = 50;
@@ -41,6 +43,7 @@ server.get('/chapter/all', function (req, res, next) {
 
     Chapter.find({ novel: id })
         .select('-body')
+        .sort('index')
         .skip(skip)
         .limit(limit)
         .exec(function (err, documents) {
@@ -55,7 +58,9 @@ server.get('/chapter/all', function (req, res, next) {
     return next();
 
 })
-
+/**
+ * ?novelid=
+ */
 server.get('chapter/count', function (req, res, next) {
     let q = req.query;
     let id = q.novelid ? q.novelid : '';

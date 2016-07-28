@@ -3,15 +3,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 /**
- * -Novelbox
+ * -NovelListbox
  * --Novellist
  * ---Novel
  */
-var Novelbox = React.createClass({
-  getInitialState: function () {
-    return { data: [] };
-  },
-  componentDidMount: function () {
+var NovelListBox = React.createClass({
+  loadData: function () {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -25,11 +22,20 @@ var Novelbox = React.createClass({
       }.bind(this)
     });
   },
+  getInitialState: function () {
+    return { data: [] };
+  },
+  componentDidMount: function () {
+    if(this.props.url) this.loadData();
+    this.props.emitter.on('novel-click', function(id){
+
+    })
+  },
   render: function () {
     return (
       <div className="novellist">
         <h1>小说列表</h1>
-        <Novellist data={this.state.data}/>
+        <Novellist data={this.state.data} emitter={this.props.emitter} />
       </div>
     )
   }
@@ -37,12 +43,14 @@ var Novelbox = React.createClass({
 
 var Novellist = React.createClass({
   render: function () {
+    var emitter = this.props.emitter;
     var nodes = this.props.data.map(function (node) {
       var props = {
         author: node.author,
         title: node.title,
         key: node._id,
-        id: node._id
+        id: node._id,
+        emitter: emitter
       };
       return (
         <Novel {...props}>
@@ -58,19 +66,23 @@ var Novellist = React.createClass({
 });
 
 var Novel = React.createClass({
+  handleClick: function() {
+    var id = this.props.id;
+    this.props.emitter.emit('novel-click', id);
+  },
   render: function () {
     return (
-      <div id={this.props.id}>
-        <h2>{this.props.title}</h2>
-        <h3>{this.props.author}</h3>
+      <div id={this.props.id} onClick={this.handleClick} >
+        <p>{this.props.title}</p>
+        <p>{this.props.author}</p>
       </div>
     )
   }
 })
 
-ReactDOM.render(
-  <Novelbox  url="http://localhost:8008/novel/all" />,
-  document.getElementById('example')
-)
+// ReactDOM.render(
+//   <NovelListBox  url="http://localhost:8008/novel/all" />,
+//   document.getElementById('example')
+// )
 
-module.exports = Novelbox;
+module.exports = NovelListBox;
