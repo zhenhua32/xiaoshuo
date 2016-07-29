@@ -11,7 +11,7 @@ var classNames = require('classnames');
 var NovelListBox = React.createClass({
   loadData: function (url) {
     $.ajax({
-      url: this.props.url,
+      url: url,
       dataType: 'json',
       cache: false,
       success: function (data) {
@@ -29,6 +29,9 @@ var NovelListBox = React.createClass({
   componentDidMount: function () {
     if (this.props.url) this.loadData(this.props.url);
   },
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return nextState.data !== this.state.data
+  },
   render: function () {
     return (
       <div className="novellist">
@@ -42,19 +45,22 @@ var NovelListBox = React.createClass({
 var Novellist = React.createClass({
   render: function () {
     var emitter = this.props.emitter;
-    var nodes = this.props.data.map(function (node) {
-      var props = {
-        author: node.author,
-        title: node.title,
-        key: node._id,
-        id: node._id,
-        emitter: emitter
-      };
-      return (
-        <Novel {...props}>
-        </Novel>
-      )
-    })
+    var nodes = [];
+    if (this.props.data) {
+      nodes = this.props.data.map(function (node) {
+        var props = {
+          author: node.author,
+          title: node.title,
+          key: node._id,
+          id: node._id,
+          emitter: emitter
+        };
+        return (
+          <Novel {...props}>
+          </Novel>
+        )
+      })
+    }
     return (
       <div>
         {nodes}

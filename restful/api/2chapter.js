@@ -65,10 +65,10 @@ server.get('chapter/count', function (req, res, next) {
     let q = req.query;
     let id = q.novelid ? q.novelid : '';
 
-    let query = id? Chapter.count({novel:id}): Chapter.count({});
+    let query = id ? Chapter.count({ novel: id }) : Chapter.count({});
 
-    query.exec(function(err, count) {
-        if(err) errhelper.json500(err, res);
+    query.exec(function (err, count) {
+        if (err) errhelper.json500(err, res);
         else {
             res.json({
                 count: count
@@ -103,6 +103,29 @@ server.get('/chapter/find', function (req, res, next) {
         });
 
     return next();
+});
+
+server.get('/chapter/findbyid', function (req, res, next) {
+    let q = req.query;
+    let id = '';
+    if (!q.id) {
+        errhelper.json400(new Error('id not exist'), res);
+    } else {
+        id = q.id;
+    }
+
+    Chapter.findById(id, function (err, document) {
+        if (err) errhelper.json500(err, res);
+        else if (!document) {
+            errhelper.json404(new Error('not find'), res);
+        }
+        else {
+            res.json(document);
+        }
+    });
+
+    return next();
+
 })
 
 server.get('/chapter/id/:id', function (req, res, next) {

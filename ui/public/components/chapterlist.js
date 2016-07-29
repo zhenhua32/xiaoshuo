@@ -29,14 +29,17 @@ var ChapterListBox = React.createClass({
   componentDidMount: function () {
     if (this.props.url) this.loadData(this.props.url);
   },
-  componentWillReceiveProps : function (nextProps) {
-    this.loadData(nextProps.url);
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return nextState.data !== this.state.data
+  },
+  componentWillReceiveProps: function (nextProps) {
+    if(this.props.url !== nextProps.url) this.loadData(nextProps.url);
   },
   render: function () {
     return (
       <div className="chapterlist">
         <h1>章节目录</h1>
-        <ChapterList data={this.state.data} />
+        <ChapterList data={this.state.data} emitter={this.props.emitter} />
       </div>
     )
 
@@ -45,15 +48,20 @@ var ChapterListBox = React.createClass({
 
 var ChapterList = React.createClass({
   render: function () {
+    var emitter = this.props.emitter;
     var nodes = [];
     if (this.props.data) {
       nodes = this.props.data.map(function (node) {
         var props = {
           key: 'index' + node.index,
-          title: node.title
+          title: node.title,
+          index: node.index,
+          id: node._id,
+          emitter: emitter,
         }
         return (
-          <ChapterNode {...props}></ChapterNode>
+          <ChapterNode {...props}>
+          </ChapterNode>
         )
       })
     }
@@ -67,9 +75,13 @@ var ChapterList = React.createClass({
 })
 
 var ChapterNode = React.createClass({
+  handleClick: function () {
+    var id = this.props.id;
+    this.props.emitter.emit('chapter-click', id);
+  },
   render: function () {
     return (
-      <p>{this.props.title}</p>
+      <p onClick={this.handleClick} >{this.props.title}</p>
     )
   }
 })

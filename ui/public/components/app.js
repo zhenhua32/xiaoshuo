@@ -28,6 +28,11 @@ var App = React.createClass({
       self.setState({
         chapter_list_url: base+'/chapter/all?novelid='+id
       })
+    });
+    emitter.on('chapter-click', function(id) {
+      self.setState({
+        chapter_url: base+'/chapter/findbyid?id='+id
+      })
     })
   },
   render: function () {

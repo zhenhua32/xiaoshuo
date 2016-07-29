@@ -8172,6 +8172,11 @@
 	        chapter_list_url: base + '/chapter/all?novelid=' + id
 	      });
 	    });
+	    emitter.on('chapter-click', function (id) {
+	      self.setState({
+	        chapter_url: base + '/chapter/findbyid?id=' + id
+	      });
+	    });
 	  },
 	  render: function render() {
 	    var props1 = {
@@ -29136,9 +29141,9 @@
 	var NovelListBox = React.createClass({
 	  displayName: 'NovelListBox',
 
-	  loadData: function loadData() {
+	  loadData: function loadData(url) {
 	    $.ajax({
-	      url: this.props.url,
+	      url: url,
 	      dataType: 'json',
 	      cache: false,
 	      success: function (data) {
@@ -29153,7 +29158,10 @@
 	    return { data: [] };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    if (this.props.url) this.loadData();
+	    if (this.props.url) this.loadData(this.props.url);
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	    return nextState.data !== this.state.data;
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -29174,16 +29182,19 @@
 
 	  render: function render() {
 	    var emitter = this.props.emitter;
-	    var nodes = this.props.data.map(function (node) {
-	      var props = {
-	        author: node.author,
-	        title: node.title,
-	        key: node._id,
-	        id: node._id,
-	        emitter: emitter
-	      };
-	      return React.createElement(Novel, props);
-	    });
+	    var nodes = [];
+	    if (this.props.data) {
+	      nodes = this.props.data.map(function (node) {
+	        var props = {
+	          author: node.author,
+	          title: node.title,
+	          key: node._id,
+	          id: node._id,
+	          emitter: emitter
+	        };
+	        return React.createElement(Novel, props);
+	      });
+	    }
 	    return React.createElement(
 	      'div',
 	      null,
@@ -29304,9 +29315,9 @@
 	var ChapterBox = React.createClass({
 	  displayName: 'ChapterBox',
 
-	  loadData: function loadData() {
+	  loadData: function loadData(url) {
 	    $.ajax({
-	      url: this.props.url,
+	      url: url,
 	      dataType: 'json',
 	      cache: false,
 	      success: function (data) {
@@ -29321,7 +29332,13 @@
 	    return { data: [] };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    if (this.props.url) this.loadData();
+	    if (this.props.url) this.loadData(this.props.url);
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	    return nextState.data !== this.state.data;
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (this.props.url !== nextProps.url) this.loadData(nextProps.url);
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -29455,7 +29472,6 @@
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
 	    });
-	    console.log(url);
 	  },
 	  getInitialState: function getInitialState() {
 	    return { data: [] };
@@ -29463,9 +29479,11 @@
 	  componentDidMount: function componentDidMount() {
 	    if (this.props.url) this.loadData(this.props.url);
 	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	    return nextState.data !== this.state.data;
+	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    this.loadData(nextProps.url);
-	    console.log(nextProps.url);
+	    if (this.props.url !== nextProps.url) this.loadData(nextProps.url);
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -29476,7 +29494,7 @@
 	        null,
 	        '章节目录'
 	      ),
-	      React.createElement(ChapterList, { data: this.state.data })
+	      React.createElement(ChapterList, { data: this.state.data, emitter: this.props.emitter })
 	    );
 	  }
 	});
@@ -29485,12 +29503,16 @@
 	  displayName: 'ChapterList',
 
 	  render: function render() {
+	    var emitter = this.props.emitter;
 	    var nodes = [];
 	    if (this.props.data) {
 	      nodes = this.props.data.map(function (node) {
 	        var props = {
 	          key: 'index' + node.index,
-	          title: node.title
+	          title: node.title,
+	          index: node.index,
+	          id: node._id,
+	          emitter: emitter
 	        };
 	        return React.createElement(ChapterNode, props);
 	      });
@@ -29507,10 +29529,14 @@
 	var ChapterNode = React.createClass({
 	  displayName: 'ChapterNode',
 
+	  handleClick: function handleClick() {
+	    var id = this.props.id;
+	    this.props.emitter.emit('chapter-click', id);
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'p',
-	      null,
+	      { onClick: this.handleClick },
 	      this.props.title
 	    );
 	  }
