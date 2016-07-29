@@ -8133,10 +8133,10 @@
 	var ReactDOM = __webpack_require__(330);
 	// react components
 	var NovelListBox = __webpack_require__(469);
-	var ChapterBox = __webpack_require__(470);
-	var ChapterListBox = __webpack_require__(471);
+	var ChapterBox = __webpack_require__(471);
+	var ChapterListBox = __webpack_require__(472);
 	// event
-	var EventEmitter = __webpack_require__(472);
+	var EventEmitter = __webpack_require__(473);
 
 	var MyEmitter = function (_EventEmitter) {
 	  _inherits(MyEmitter, _EventEmitter);
@@ -8157,17 +8157,33 @@
 	var App = React.createClass({
 	  displayName: 'App',
 
+	  getInitialState: function getInitialState() {
+	    return {
+	      novel_list_url: 'http://localhost:8008/novel/all',
+	      chapter_list_url: 'http://localhost:8008/chapter/all?novelid=579078a1b7116d9c34b8d06b&limit=50&skip=0',
+	      chapter_url: 'http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1'
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var base = 'http://localhost:8008';
+	    var self = this;
+	    emitter.on('novel-click', function (id) {
+	      self.setState({
+	        chapter_list_url: base + '/chapter/all?novelid=' + id
+	      });
+	    });
+	  },
 	  render: function render() {
 	    var props1 = {
-	      url: this.props.novel_list_url,
+	      url: this.state.novel_list_url,
 	      emitter: this.props.emitter
 	    };
 	    var props2 = {
-	      url: this.props.chapter_list_url,
+	      url: this.state.chapter_list_url,
 	      emitter: this.props.emitter
 	    };
 	    var props3 = {
-	      url: this.props.chapter_url,
+	      url: this.state.chapter_url,
 	      emitter: this.props.emitter
 	    };
 	    return React.createElement(
@@ -8189,10 +8205,7 @@
 	});
 
 	var props = {
-	  emitter: emitter,
-	  novel_list_url: 'http://localhost:8008/novel/all',
-	  chapter_list_url: 'http://localhost:8008/chapter/all?novelid=579078a1b7116d9c34b8d06b&limit=50&skip=0',
-	  chapter_url: 'http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1'
+	  emitter: emitter
 	};
 
 	ReactDOM.render(React.createElement(App, props), document.getElementById('example'));
@@ -29113,6 +29126,7 @@
 	__webpack_require__(1);
 	var React = __webpack_require__(299);
 	var ReactDOM = __webpack_require__(330);
+	var classNames = __webpack_require__(470);
 
 	/**
 	 * -NovelListbox
@@ -29140,7 +29154,6 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    if (this.props.url) this.loadData();
-	    this.props.emitter.on('novel-click', function (id) {});
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -29182,14 +29195,20 @@
 	var Novel = React.createClass({
 	  displayName: 'Novel',
 
-	  handleClick: function handleClick() {
+	  handleClick: function handleClick(event) {
 	    var id = this.props.id;
+	    // $('#' + id).addClass('checked');
 	    this.props.emitter.emit('novel-click', id);
 	  },
 	  render: function render() {
+	    var _this = this;
+
 	    return React.createElement(
 	      'div',
-	      { id: this.props.id, onClick: this.handleClick },
+	      { id: this.props.id, ref: function ref(c) {
+	          return _this._div = c;
+	        },
+	        onClick: this.handleClick },
 	      React.createElement(
 	        'p',
 	        null,
@@ -29213,6 +29232,60 @@
 
 /***/ },
 /* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29352,7 +29425,7 @@
 	module.exports = ChapterBox;
 
 /***/ },
-/* 471 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29370,9 +29443,9 @@
 	var ChapterListBox = React.createClass({
 	  displayName: 'ChapterListBox',
 
-	  loadData: function loadData() {
+	  loadData: function loadData(url) {
 	    $.ajax({
-	      url: this.props.url,
+	      url: url,
 	      dataType: 'json',
 	      cache: false,
 	      success: function (data) {
@@ -29382,12 +29455,17 @@
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
 	    });
+	    console.log(url);
 	  },
 	  getInitialState: function getInitialState() {
 	    return { data: [] };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    if (this.props.url) this.loadData();
+	    if (this.props.url) this.loadData(this.props.url);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    this.loadData(nextProps.url);
+	    console.log(nextProps.url);
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -29448,7 +29526,7 @@
 	module.exports = ChapterListBox;
 
 /***/ },
-/* 472 */
+/* 473 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.

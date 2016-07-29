@@ -9,9 +9,9 @@ var ReactDOM = require('react-dom');
  */
 
 var ChapterListBox = React.createClass({
-  loadData: function () {
+  loadData: function (url) {
     $.ajax({
-      url: this.props.url,
+      url: url,
       dataType: 'json',
       cache: false,
       success: function (data) {
@@ -27,8 +27,10 @@ var ChapterListBox = React.createClass({
     return { data: [] };
   },
   componentDidMount: function () {
-    if (this.props.url) this.loadData();
-    
+    if (this.props.url) this.loadData(this.props.url);
+  },
+  componentWillReceiveProps : function (nextProps) {
+    this.loadData(nextProps.url);
   },
   render: function () {
     return (

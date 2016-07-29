@@ -1,6 +1,7 @@
 require("babel-polyfill");
 var React = require('react');
 var ReactDOM = require('react-dom');
+var classNames = require('classnames');
 
 /**
  * -NovelListbox
@@ -8,7 +9,7 @@ var ReactDOM = require('react-dom');
  * ---Novel
  */
 var NovelListBox = React.createClass({
-  loadData: function () {
+  loadData: function (url) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -26,10 +27,7 @@ var NovelListBox = React.createClass({
     return { data: [] };
   },
   componentDidMount: function () {
-    if(this.props.url) this.loadData();
-    this.props.emitter.on('novel-click', function(id){
-
-    })
+    if (this.props.url) this.loadData(this.props.url);
   },
   render: function () {
     return (
@@ -66,13 +64,15 @@ var Novellist = React.createClass({
 });
 
 var Novel = React.createClass({
-  handleClick: function() {
+  handleClick: function (event) {
     var id = this.props.id;
+    // $('#' + id).addClass('checked');
     this.props.emitter.emit('novel-click', id);
   },
   render: function () {
     return (
-      <div id={this.props.id} onClick={this.handleClick} >
+      <div id={this.props.id} ref={(c) => this._div = c}
+        onClick={this.handleClick} >
         <p>{this.props.title}</p>
         <p>{this.props.author}</p>
       </div>
