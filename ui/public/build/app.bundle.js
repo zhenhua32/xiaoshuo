@@ -8194,17 +8194,9 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'app' },
-	      React.createElement(
-	        'div',
-	        { className: 'left' },
-	        React.createElement(NovelListBox, props1),
-	        React.createElement(ChapterListBox, props2)
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'rigth' },
-	        React.createElement(ChapterBox, props3)
-	      )
+	      React.createElement(NovelListBox, props1),
+	      React.createElement(ChapterListBox, props2),
+	      React.createElement(ChapterBox, props3)
 	    );
 	  }
 	});
@@ -8213,7 +8205,7 @@
 	  emitter: emitter
 	};
 
-	ReactDOM.render(React.createElement(App, props), document.getElementById('example'));
+	ReactDOM.render(React.createElement(App, props), document.getElementById('app'));
 
 /***/ },
 /* 299 */
@@ -29409,28 +29401,7 @@
 	  displayName: 'ChapterFoot',
 
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'chapterfoot' },
-	      React.createElement(
-	        'span',
-	        null,
-	        React.createElement(
-	          'button',
-	          null,
-	          '上一页'
-	        )
-	      ),
-	      React.createElement(
-	        'span',
-	        null,
-	        React.createElement(
-	          'button',
-	          null,
-	          '下一页'
-	        )
-	      )
-	    );
+	    return React.createElement('div', { className: 'chapterfoot' });
 	  }
 	});
 

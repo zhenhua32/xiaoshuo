@@ -91,8 +91,7 @@ var ChapterFoot = React.createClass({
   render: function () {
     return (
       <div className="chapterfoot">
-        <span><button>上一页</button></span>
-        <span><button>下一页</button></span>
+
       </div>
     )
   }

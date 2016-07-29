@@ -25,12 +25,7 @@ hr {
     padding: 0;
 }
 
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
+audio, canvas, iframe, img, svg, video {
     vertical-align: middle;
 }
 
@@ -65,6 +60,7 @@ body {
     margin: 0 5%;
 }
 
+
 /* ===================
     ALL: Orange Theme
    =================== */
@@ -73,20 +69,18 @@ body {
     border-bottom: 20px solid #e44d26;
 }
 
-.footer-container,
-.main aside {
+.footer-container, .main aside {
     border-top: 20px solid #e44d26;
 }
 
-.header-container,
-.footer-container,
-.main aside {
+.header-container, .footer-container, .main aside {
     background: #f16529;
 }
 
 .title {
     color: white;
 }
+
 
 /* ==============
     MOBILE: Menu
@@ -102,23 +96,21 @@ nav a {
     display: block;
     margin-bottom: 10px;
     padding: 15px 0;
-
     text-align: center;
     text-decoration: none;
     font-weight: bold;
-
     color: white;
     background: #e44d26;
 }
 
-nav a:hover,
-nav a:visited {
+nav a:hover, nav a:visited {
     color: white;
 }
 
 nav a:hover {
     text-decoration: underline;
 }
+
 
 /* ==============
     MOBILE: Main
@@ -142,6 +134,7 @@ nav a:hover {
     padding: 20px 0;
 }
 
+
 /* ===============
     ALL: IE Fixes
    =============== */
@@ -150,22 +143,55 @@ nav a:hover {
     padding-top: 20px;
 }
 
+
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
+.header-button {
+    width: 40px;
+    height: 100%;
+    border-right: 5px orangered solid;
+    box-sizing: border-box;
+    position: fixed;
+}
 
+.novellist {
+    width: 20%;
+    height: 100%;
+    float: left;
+    border-right: 5px deepskyblue solid;
+    box-sizing: border-box;
+    overflow: scroll;
+    position: fixed;
+    margin-left: 40px;
+}
 
+.chapterlist {
+    width: 20%;
+    height: 100%;
+    float: left;
+    border-right: 5px deepskyblue solid;
+    box-sizing: border-box;
+    overflow: scroll;
+    position: fixed;
+    margin-left: calc(20% + 40px);
+}
 
+.chapter {
+    width: calc(60% - 40px);
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    overflow: scroll;
+    position: fixed;
+    margin-left: calc(40% + 40px);
+}
 
-
-
-
-
-
-
-
-
+.novellist p, .chapterlist p {
+    font-size: 1.2em;
+    white-space: nowrap;
+}
 
 
 /* ==========================================================================
@@ -173,11 +199,9 @@ nav a:hover {
    ========================================================================== */
 
 @media only screen and (min-width: 480px) {
-
-/* ====================
+    /* ====================
     INTERMEDIATE: Menu
    ==================== */
-
     nav a {
         float: left;
         width: 27%;
@@ -185,63 +209,49 @@ nav a:hover {
         padding: 25px 2%;
         margin-bottom: 0;
     }
-
     nav li:first-child a {
         margin-left: 0;
     }
-
     nav li:last-child a {
         margin-right: 0;
     }
-
-/* ========================
+    /* ========================
     INTERMEDIATE: IE Fixes
    ======================== */
-
     nav ul li {
         display: inline;
     }
-
     .oldie nav a {
         margin: 0 0.7%;
     }
 }
 
 @media only screen and (min-width: 768px) {
-
-/* ====================
+    /* ====================
     WIDE: CSS3 Effects
    ==================== */
-
-    .header-container,
-    .main aside {
+    .header-container, .main aside {
         -webkit-box-shadow: 0 5px 10px #aaa;
-           -moz-box-shadow: 0 5px 10px #aaa;
-                box-shadow: 0 5px 10px #aaa;
+        -moz-box-shadow: 0 5px 10px #aaa;
+        box-shadow: 0 5px 10px #aaa;
     }
-
-/* ============
+    /* ============
     WIDE: Menu
    ============ */
-
     .title {
         float: left;
     }
-
     nav {
         float: right;
         width: 38%;
     }
-
-/* ============
+    /* ============
     WIDE: Main
    ============ */
-
     .main article {
         float: left;
         width: 57%;
     }
-
     .main aside {
         float: right;
         width: 28%;
@@ -249,16 +259,16 @@ nav a:hover {
 }
 
 @media only screen and (min-width: 1140px) {
-
-/* ===============
+    /* ===============
     Maximal Width
    =============== */
-
     .wrapper {
-        width: 1026px; /* 1140px - 10% for margins */
+        width: 1026px;
+        /* 1140px - 10% for margins */
         margin: 0 auto;
     }
 }
+
 
 /* ==========================================================================
    Helper classes
@@ -280,8 +290,7 @@ nav a:hover {
     width: 1px;
 }
 
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus {
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
     clip: auto;
     height: auto;
     margin: 0;
@@ -294,8 +303,7 @@ nav a:hover {
     visibility: hidden;
 }
 
-.clearfix:before,
-.clearfix:after {
+.clearfix:before, .clearfix:after {
     content: " ";
     display: table;
 }
@@ -308,66 +316,48 @@ nav a:hover {
     *zoom: 1;
 }
 
+
 /* ==========================================================================
    Print styles
    ========================================================================== */
 
 @media print {
-    *,
-    *:before,
-    *:after {
+    *, *:before, *:after {
         background: transparent !important;
         color: #000 !important;
         box-shadow: none !important;
         text-shadow: none !important;
     }
-
-    a,
-    a:visited {
+    a, a:visited {
         text-decoration: underline;
     }
-
     a[href]:after {
         content: " (" attr(href) ")";
     }
-
     abbr[title]:after {
         content: " (" attr(title) ")";
     }
-
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
+    a[href^="#"]:after, a[href^="javascript:"]:after {
         content: "";
     }
-
-    pre,
-    blockquote {
+    pre, blockquote {
         border: 1px solid #999;
         page-break-inside: avoid;
     }
-
     thead {
         display: table-header-group;
     }
-
-    tr,
-    img {
+    tr, img {
         page-break-inside: avoid;
     }
-
     img {
         max-width: 100% !important;
     }
-
-    p,
-    h2,
-    h3 {
+    p, h2, h3 {
         orphans: 3;
         widows: 3;
     }
-
-    h2,
-    h3 {
+    h2, h3 {
         page-break-after: avoid;
     }
 }

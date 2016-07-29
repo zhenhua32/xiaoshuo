@@ -7,7 +7,7 @@ var ChapterBox = require('./chapter');
 var ChapterListBox = require('./chapterlist');
 // event
 const EventEmitter = require('events');
-class MyEmitter extends EventEmitter {}
+class MyEmitter extends EventEmitter { }
 
 const emitter = new MyEmitter();
 /**
@@ -21,17 +21,17 @@ var App = React.createClass({
       chapter_url: 'http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1'
     };
   },
-  componentDidMount: function() {
+  componentDidMount: function () {
     var base = 'http://localhost:8008';
     var self = this;
-    emitter.on('novel-click', function(id) {
+    emitter.on('novel-click', function (id) {
       self.setState({
-        chapter_list_url: base+'/chapter/all?novelid='+id
+        chapter_list_url: base + '/chapter/all?novelid=' + id
       })
     });
-    emitter.on('chapter-click', function(id) {
+    emitter.on('chapter-click', function (id) {
       self.setState({
-        chapter_url: base+'/chapter/findbyid?id='+id
+        chapter_url: base + '/chapter/findbyid?id=' + id
       })
     })
   },
@@ -50,13 +50,10 @@ var App = React.createClass({
     }
     return (
       <div className="app">
-        <div className="left">
-          <NovelListBox {...props1} />
-          <ChapterListBox {...props2} />
-        </div>
-        <div className="rigth">
-          <ChapterBox  {...props3} />
-        </div>
+        <NovelListBox {...props1} />
+        <ChapterListBox {...props2} />
+        <ChapterBox  {...props3} />
+
       </div>
     )
   }
@@ -68,5 +65,5 @@ var props = {
 
 ReactDOM.render(
   <App {...props}/>,
-  document.getElementById('example')
+  document.getElementById('app')
 )
