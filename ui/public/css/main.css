@@ -148,10 +148,15 @@ nav a:hover {
    Author's custom styles
    ========================================================================== */
 
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+
 .header-button {
     width: 40px;
     height: 100%;
-    border-right: 5px orangered solid;
+    border-right: 5px lightgray solid;
     box-sizing: border-box;
     position: fixed;
 }
@@ -159,10 +164,9 @@ nav a:hover {
 .novellist {
     width: 20%;
     height: 100%;
-    float: left;
-    border-right: 5px deepskyblue solid;
+    border-right: 5px lightgray solid;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow-x: hidden;
     position: fixed;
     margin-left: 40px;
 }
@@ -170,10 +174,9 @@ nav a:hover {
 .chapterlist {
     width: 20%;
     height: 100%;
-    float: left;
-    border-right: 5px deepskyblue solid;
+    border-right: 5px lightgray solid;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow-x: hidden;
     position: fixed;
     margin-left: calc(20% + 40px);
 }
@@ -181,7 +184,6 @@ nav a:hover {
 .chapter {
     width: calc(60% - 40px);
     height: 100%;
-    float: left;
     box-sizing: border-box;
     overflow: scroll;
     position: fixed;
@@ -191,6 +193,7 @@ nav a:hover {
 .novellist p, .chapterlist p {
     font-size: 1.2em;
     white-space: nowrap;
+    margin: 5px;
 }
 
 
