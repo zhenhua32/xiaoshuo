@@ -98,9 +98,5 @@ var ChapterFoot = React.createClass({
 })
 
 
-// ReactDOM.render(
-//   <ChapterBox url="http://localhost:8008/chapter/find?novelid=579078a1b7116d9c34b8d062&index=1" />,
-//   document.getElementById('example')
-// )
 
 module.exports = ChapterBox;

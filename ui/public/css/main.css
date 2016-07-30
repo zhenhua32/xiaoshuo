@@ -161,6 +161,10 @@ nav a:hover {
     position: fixed;
 }
 
+.header-button button {
+    background: white;
+}
+
 .novellist {
     width: 20%;
     height: 100%;
@@ -194,6 +198,10 @@ nav a:hover {
     font-size: 1.2em;
     white-space: nowrap;
     margin: 5px;
+}
+
+div .checked {
+    color: coral;
 }
 
 

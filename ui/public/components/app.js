@@ -10,6 +10,10 @@ const EventEmitter = require('events');
 class MyEmitter extends EventEmitter { }
 
 const emitter = new MyEmitter();
+// url parse
+const url = require('url');
+const querystring = require('querystring');
+
 /**
  * 
  */
@@ -26,13 +30,26 @@ var App = React.createClass({
     var self = this;
     emitter.on('novel-click', function (id) {
       self.setState({
-        chapter_list_url: base + '/chapter/all?novelid=' + id
+        chapter_list_url: base + '/chapter/all?novelid=' + id + '&limit=50&skip=0'
       })
     });
     emitter.on('chapter-click', function (id) {
       self.setState({
         chapter_url: base + '/chapter/findbyid?id=' + id
       })
+    });
+    emitter.on('scroll-bottom', function () {
+      let urlobj = url.parse(self.state.chapter_list_url);
+      let urlqueryobj = querystring.parse(urlobj.query);
+      
+      if (!urlqueryobj.skip) urlqueryobj.skip = '50';
+      else urlqueryobj.skip = (Number(urlqueryobj.skip) + 50).toString();
+      // 赋值到 search 是因为 url.format 函数的逻辑是先判断 serach 是否存在
+      // 优先使用 search 而不是 query
+      urlobj.search = querystring.stringify(urlqueryobj);
+      self.setState({
+        chapter_list_url: url.format(urlobj)
+      });
     })
   },
   render: function () {

@@ -72,23 +72,22 @@ var Novellist = React.createClass({
 var Novel = React.createClass({
   handleClick: function (event) {
     var id = this.props.id;
-    // $('#' + id).addClass('checked');
+    $(this._div).siblings().removeClass('checked');
+    $(this._div).addClass('checked');
     this.props.emitter.emit('novel-click', id);
   },
   render: function () {
     return (
-      <div id={this.props.id} ref={(c) => this._div = c}
-        onClick={this.handleClick} >
-        <p>{this.props.title}</p>
+      <div id={this.props.id} ref={(c) => this._div = c} >
+        <p onClick={this.handleClick} >
+          {this.props.title}
+        </p>
         <p>{this.props.author}</p>
       </div>
     )
   }
 })
 
-// ReactDOM.render(
-//   <NovelListBox  url="http://localhost:8008/novel/all" />,
-//   document.getElementById('example')
-// )
+
 
 module.exports = NovelListBox;
