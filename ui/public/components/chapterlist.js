@@ -20,6 +20,7 @@ var ChapterListBox = React.createClass({
         if (this.isMounted()) {
           if (isnewnovel) {
             this.setState({ data: data });
+            $(this._div).scrollTop(0);
           } else {
             this.setState({ data: this.state.data.concat(data) });
           }

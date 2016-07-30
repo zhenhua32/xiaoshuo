@@ -29448,6 +29448,7 @@
 	        if (this.isMounted()) {
 	          if (isnewnovel) {
 	            this.setState({ data: data });
+	            $(this._div).scrollTop(0);
 	          } else {
 	            this.setState({ data: this.state.data.concat(data) });
 	          }
@@ -29479,8 +29480,6 @@
 	    if (this.props.url !== nextProps.url) {
 	      var a = nodequery.parse(nodeurl.parse(this.props.url).query).novelid;
 	      var b = nodequery.parse(nodeurl.parse(nextProps.url).query).novelid;
-	      console.log(a);
-	      console.log(b);
 	      if (a === b) this.loadData(nextProps.url, false);else this.loadData(nextProps.url, true);
 	    }
 	  },
