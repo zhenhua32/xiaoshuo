@@ -15,7 +15,6 @@ var ChapterListBox = React.createClass({
     $.ajax({
       url: url,
       dataType: 'json',
-      cache: false,
       success: function (data) {
         if (this.isMounted()) {
           if (isnewnovel) {

@@ -14,7 +14,6 @@ var ChapterBox = React.createClass({
     $.ajax({
       url: url,
       dataType: 'json',
-      cache: false,
       success: function (data) {
         if (this.isMounted())
           this.setState({ data: data });
