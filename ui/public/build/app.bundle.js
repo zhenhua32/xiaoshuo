@@ -29460,7 +29460,7 @@
 	    var divH = $(this._div)[0].clientHeight;
 	    var scrollH = $(this._div)[0].scrollHeight;
 	    var scrollT = $(this._div)[0].scrollTop;
-	    if (scrollH - scrollT - 0.5 < divH) {
+	    if (scrollH - scrollT - 1.1 < divH) {
 	      this.props.emitter.emit('scroll-bottom');
 	    }
 	  },
