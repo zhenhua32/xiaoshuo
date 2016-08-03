@@ -5,6 +5,7 @@
   "exclude": [
     "crawler/node_modules",
 	"restful/node_modules",
-	"ui/node_modules"
+	"ui/node_modules",
+	"uibootstrap/node_modules"
   ]
 }

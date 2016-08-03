@@ -21,7 +21,9 @@ server.put('/novel', function (req, res, next) {
     });
     return next();
 });
-
+/**
+ * ?limit=&skip=
+ */
 server.get('/novel/all', function (req, res, next) {
     let q = req.query;
     let limit = 50;

@@ -26,6 +26,7 @@ server.put('/chapter', function (req, res, next) {
     return next();
 });
 /**
+ * 根据小说id, 返回章节列表, 不包括章节的body部分
  * ?novelid=&limit=&skip=
  */
 server.get('/chapter/all', function (req, res, next) {
@@ -59,6 +60,7 @@ server.get('/chapter/all', function (req, res, next) {
 
 })
 /**
+ * 根据小说id, 统计章节数, 或者数据库内的总章节数
  * ?novelid=
  */
 server.get('chapter/count', function (req, res, next) {
@@ -78,7 +80,10 @@ server.get('chapter/count', function (req, res, next) {
 
     return next();
 })
-
+/**
+ * 根据小说id和index顺序, 返回章节
+ * ?novelid=&index=
+ */
 server.get('/chapter/find', function (req, res, next) {
     let q = req.query;
     let novelid = '';
@@ -104,7 +109,10 @@ server.get('/chapter/find', function (req, res, next) {
 
     return next();
 });
-
+/**
+ * 根据章节id, 返回章节
+ * ?id=
+ */
 server.get('/chapter/findbyid', function (req, res, next) {
     let q = req.query;
     let id = '';
