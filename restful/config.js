@@ -37,8 +37,6 @@ server.use(restify.throttle({
   }
 }));
 
-
-
 module.exports = server;
 
 

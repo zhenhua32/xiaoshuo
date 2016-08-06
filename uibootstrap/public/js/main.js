@@ -6,6 +6,7 @@ $(document).ready(function () {
       loadNovel();
       break;
     case '/novel.html':
+      loadProcess();
       loadChapter();
       break;
     case '/chapter.html':
@@ -53,6 +54,7 @@ function loadChapter() {
     crossDomain: true
   })
     .then(function (data, textStatus, jqXHR) {
+
       data.map(function (node) {
         $('#chapterlist').append(
           '<a href="/chapter.html?novelid=' +
@@ -60,8 +62,11 @@ function loadChapter() {
           '" class="list-group-item">' +
           node.title +
           '</a>'
-        )
-      })
+        );
+      });
+
+      $('.progress-bar').attr('aria-valuenow', '99').text(99).attr('style', 'width: 99%');
+      $('.progress').fadeOut(3000);
 
     }, function (jqXHR, textStatus, err) {
       console.log(jqXHR.responseJSON.msg);
@@ -74,7 +79,7 @@ function loadChapter() {
 function loadContent() {
   var query = parseQuery(window.location.search);
 
-  var base = '/chapter.html?novelid=' + query.novelid +'&index=';
+  var base = '/chapter.html?novelid=' + query.novelid + '&index=';
 
   if (query.index == 1) {
     $('.pager .previous').addClass('disabled');
@@ -116,5 +121,13 @@ function parseQuery(search) {
     hashes[hash[0]] = hash[1];
   }
   return hashes;
+}
+
+function loadProcess() {
+  $(document).bind('ajaxSend', function () {
+    $('.progress-bar').attr('aria-valuenow', '20').text(20).attr('style', 'width: 20%');
+  }).bind('ajaxSuccess', function () {
+    $('.progress-bar').attr('aria-valuenow', '80').text(80).attr('style', 'width: 80%');
+  })
 }
 
