@@ -6,6 +6,8 @@ server.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept");
 
+  res.header('Cache-Control', 'max-age=604800');
+
   return next();
 });
 
