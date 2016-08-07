@@ -16,14 +16,14 @@ _69shu.saveNovel(link)
     for (let i = 0; i < result.length; i++) {
       ids.push({
         id: result[i].body.id,
-        intro: result[i].body.link
+        intro: result[i].link
       });
     }
-    fs.writeFileSync('./info/69_1.json', JSON.stringify({
-      ids: ids
-    }), { encoding: 'utf8' });
 
-    console.log('step1 done')
+    fs.writeFileSync('./info/69_1.json', JSON.stringify(
+      ids
+    ), { encoding: 'utf8' });
+
   }, function (reason) {
     console.log(reason)
   });

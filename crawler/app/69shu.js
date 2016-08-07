@@ -51,9 +51,9 @@ function saveNovel(url) {
             } else {
               bodyList.push({
                 index: i,
-                msg: 'ok',
                 response: response,
-                body: JSON.parse(body)
+                body: JSON.parse(body),
+                link: url
               });
               // 注意点回调, 真是坑, 如果写到for循环外就什么都得不到了
               if (i == li.length - 1) {
