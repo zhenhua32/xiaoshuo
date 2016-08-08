@@ -38,7 +38,7 @@ function next() {
     count ++;
     save(array[count], next);
   } else {
-    console.log(done);
+    console.log('done');
   }
 }
 save(array[0], next);
