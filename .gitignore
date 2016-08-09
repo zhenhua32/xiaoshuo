@@ -85,3 +85,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# ==========================
+# tobe
+/crawler/script/info/*
+
