@@ -1,3 +1,7 @@
+// config
+var baseNovel = '/api/novel';
+var baseChapter = '/api/chapter'
+
 // var $ = require('jquery');
 $(document).ready(function () {
   // add novel list
@@ -20,7 +24,7 @@ $(document).ready(function () {
 
 function loadNovel() {
   $.ajax({
-    url: 'http://localhost:8008/novel/all',
+    url: baseNovel + '/all',
     dataType: 'json',
     method: 'GET',
     crossDomain: true
@@ -42,13 +46,13 @@ function loadChapter() {
   var search = window.location.search;
   var id = search.slice(4);
 
-  $.get('http://localhost:8008/novel/id/' + id)
+  $.get(baseNovel + '/id/' + id)
     .then(function (data) {
       $('#novel').text(data.title);
     })
 
-  $.ajax({
-    url: 'http://localhost:8008/chapter/all?limit=9999&skip=0&novelid=' + id,
+  $.ajax({ 
+    url: baseChapter + '/all?limit=9999&skip=0&novelid=' + id,
     dataType: 'json',
     method: 'GET',
     crossDomain: true
@@ -90,8 +94,8 @@ function loadContent() {
   $('.pager .next a').attr('href', base + (Number(query.index) + 1))
 
 
-  $.ajax({
-    url: 'http://localhost:8008/chapter/find?novelid=' + query.novelid + '&index=' + query.index,
+  $.ajax({ 
+    url: baseChapter + '/find?novelid=' + query.novelid + '&index=' + query.index,
     dataType: 'json',
     method: 'GET',
     crossDomain: true
@@ -111,7 +115,7 @@ function loadContent() {
 
 
 }
-// >novelid=&index
+// ?novelid=&index
 function parseQuery(search) {
   var hashes = {};
   var hash = null;
