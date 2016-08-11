@@ -25,7 +25,7 @@ master[0] = _69shu.getChapterList(links[0])
 for (let i = 1; i < links.length + 1; i++) {
   master[i] = master[i - 1].then(function (result) {
     array.push({
-      id: ids[i],
+      id: ids[i-1],
       list: result
     })
 

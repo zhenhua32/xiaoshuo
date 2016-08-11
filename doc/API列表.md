@@ -4,7 +4,7 @@
 
 方法  | 链接 | query 或 post 参数
 ---- |----- |------
-put  | /novel                  |title author link                         
+put  | /novel                     |title author link                         
 get  | /novel/id/:id              |无                            
 post | /novel/id/:id/title        |title                
 post | /novel/id/:id/author       |author    
