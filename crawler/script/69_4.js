@@ -19,7 +19,7 @@ function save(novel, next) {
         _69shu.saveChapter(novel.list[index].url, index + 1, novel.id)
         index++;
 
-        process.stdout.write(index / novel.list.length + ' \033[0G');
+        // process.stdout.write(index / novel.list.length + ' \033[0G');
 
         recursion();
       }, 1000);

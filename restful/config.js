@@ -1,4 +1,5 @@
 const restify = require('restify');
+const bunyan = require('bunyan');
 
 let server = restify.createServer({
   name: 'xs-server',
@@ -35,6 +36,13 @@ server.use(restify.throttle({
       burst: 0
     }
   }
+}));
+
+server.on('after', restify.auditLogger({
+  log: bunyan.createLogger({
+    name: 'audit',
+    stream: process.stdout
+  })
 }));
 
 module.exports = server;
