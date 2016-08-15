@@ -21,7 +21,7 @@ for(let i=0; i<list.length; i++) {
 let array = [];
 
 let master = [];
-master[0] = _69shu.getChapterList(links[0])
+master[0] = _69shu.getChapterList(links[0]);
 for (let i = 1; i < links.length + 1; i++) {
   master[i] = master[i - 1].then(function (result) {
     array.push({

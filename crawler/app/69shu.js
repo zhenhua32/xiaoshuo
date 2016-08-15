@@ -9,7 +9,7 @@ let _69shu = {};
  * only useful in www.69shu.com
  * resolve: object array,  type: Array
  * reject: error,          type: Error
- * @param {string} url
+ * @param {string} url - The books list url
  */
 function saveNovel(url) {
 

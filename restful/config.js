@@ -41,6 +41,7 @@ server.use(restify.throttle({
 server.on('after', restify.auditLogger({
   log: bunyan.createLogger({
     name: 'audit',
+    level: 'error',
     stream: process.stdout
   })
 }));
