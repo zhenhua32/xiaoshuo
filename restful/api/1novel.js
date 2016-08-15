@@ -45,6 +45,9 @@ server.get('/novel/all', function (req, res, next) {
     return next();
 });
 
+/**
+ * 根据小说id, 返回小说信息
+ */
 server.get('/novel/id/:id', function (req, res, next) {
     if (!helper.testId(req.params, res)) return next();
 
@@ -61,6 +64,9 @@ server.get('/novel/id/:id', function (req, res, next) {
     return next();
 });
 
+/**
+ * 302, 重定向到 /novel/id/:id
+ */
 server.get('/novel/id/:id/', function (req, res, next) {
     res.redirect(301, '/nove/:id', next);
 })
