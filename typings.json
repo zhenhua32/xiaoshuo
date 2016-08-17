@@ -2,11 +2,14 @@
   "globalDependencies": {
     "cheerio": "registry:dt/cheerio#0.17.0+20160407085313",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "mongoose": "registry:dt/mongoose#3.8.5+20160629014609",
     "node": "registry:dt/node#6.0.0+20160621231320",
     "react": "registry:dt/react#0.14.0+20160720060442",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "request": "registry:dt/request#0.0.0+20160524135346",
-    "restify": "registry:dt/restify#2.0.0+20160602145247"
+    "restify": "registry:dt/restify#2.0.0+20160602145247",
+    "should": "registry:dt/should#8.1.1+20160608082854",
+    "supertest": "registry:dt/supertest#1.1.0+20160724070541"
   }
 }

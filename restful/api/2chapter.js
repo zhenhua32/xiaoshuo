@@ -58,7 +58,7 @@ server.get('/chapter/all', function (req, res, next) {
 
     return next();
 
-})
+});
 /**
  * 根据小说id, 统计章节数, 或者数据库内的总章节数
  * ?novelid=
@@ -79,7 +79,7 @@ server.get('chapter/count', function (req, res, next) {
     })
 
     return next();
-})
+});
 /**
  * 根据小说id和index顺序, 返回章节
  * ?novelid=&index=
@@ -134,7 +134,7 @@ server.get('/chapter/findbyid', function (req, res, next) {
 
     return next();
 
-})
+});
 
 server.get('/chapter/id/:id', function (req, res, next) {
     Chapter.findById(req.params.id, function (err, document) {

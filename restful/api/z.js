@@ -1,3 +1,3 @@
-let server = require('./2chapter');
+let server = require('./chapter');
 
 module.exports = server;
