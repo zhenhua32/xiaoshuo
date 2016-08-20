@@ -14,7 +14,7 @@ const Novel = require('../model/novel');
 
 describe('novel test', function () {
   // create 10 items in collection novel , for test
-  beforeEach(function () {
+  beforeEach(function (done) {
     Novel.remove({}, function (err) {
       if (err) console.log(err);
 
@@ -26,13 +26,9 @@ describe('novel test', function () {
           link: 'http//tobe.com'
         };
         let node = new Novel(param);
-        node.save(function (err, documnet) {
+        node.save(function (err, document) {
           if (err) console.log(err);
-          if (i == 10) {
-            Novel.count(function (err, count) {
-              if (err) console.log(err);
-            })
-          }
+          if (i == 9) done();
         });
       }
     })
@@ -168,21 +164,18 @@ describe('novel test', function () {
 
   describe('/novel/id/:id', function () {
     it('get should success', function (done) {
-      request
-        .get('/novel/all')
-        .end(function (err, res) {
-          should.not.exist(err);
-          let id = res.body[0]._id;
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
 
-          request
-            .get('/novel/id/' + id)
-            .expect(200)
-            .end(function (err, res) {
-              should.not.exist(err);
-              done();
-            })
-
-        })
+        request
+          .get('/novel/id/' + id)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
     });
 
     it('get should fail with fake id', function (done) {
@@ -210,14 +203,58 @@ describe('novel test', function () {
 
   describe('/novel/id/:id/', function () {
     it('get should success', function (done) {
-      request
-        .get('/novel/id/' + 'err')
-        .expect(302)
-        .end(function (err, res) {
-          should.not.exist(err);
-          done();
-        })
-    })
+      Novel.find(function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .get('/novel/id/' + id)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
+  });
+
+  describe('/novel/id/:id/title', function () {
+    it('post should success', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .post('/novel/id/' + id + '/title')
+          .send({
+            title: 'new title'
+          })
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
+    it('post should fail without title', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .post('/novel/id/' + id + '/title')
+          .send({
+          })
+          .expect(400)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
 
   })
 

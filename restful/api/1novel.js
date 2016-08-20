@@ -68,7 +68,7 @@ server.get('/novel/id/:id', function (req, res, next) {
  * 302, 重定向到 /novel/id/:id
  */
 server.get('/novel/id/:id/', function (req, res, next) {
-    res.redirect(301, '/nove/:id', next);
+    res.redirect(301, '/nove/id/:id', next);
 })
 
 /**
@@ -80,7 +80,10 @@ server.get('/novel/id/:id/', function (req, res, next) {
  */
 server.post('/novel/id/:id/title', function (req, res, next) {
     let p = req.params;
-    if (!p.title) return next();
+    if (!p.title) {
+        errhelper.json400(new Error('title not exist'), res);
+        return next();
+    }
     if (!helper.testId(p, res)) return next();
 
     Novel.updateTitle(p, res);
@@ -90,7 +93,10 @@ server.post('/novel/id/:id/title', function (req, res, next) {
 
 server.post('/novel/:id/author', function (req, res, next) {
     let p = req.params;
-    if (!p.author) return next();
+    if (!p.author) {
+        errhelper.json400(new Error('author not exist'), res);
+        return next();
+    }
     if (!helper.testId(p, res)) return next();
 
     Novel.updateAuthor(p, res);
