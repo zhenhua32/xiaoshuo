@@ -33,7 +33,7 @@ describe('novel test', function () {
       }
     })
   });
-  // clear database
+  // clear Novel collection
   after(function () {
     Novel.remove({}, function (err) {
       if (err) console.log(err);
@@ -158,7 +158,7 @@ describe('novel test', function () {
           (res.body.length).should.equal(2);
           done();
         })
-    })
+    });
 
   });
 
@@ -245,8 +245,7 @@ describe('novel test', function () {
 
         request
           .post('/novel/id/' + id + '/title')
-          .send({
-          })
+          .send({})
           .expect(400)
           .end(function (err, res) {
             should.not.exist(err);
@@ -256,7 +255,81 @@ describe('novel test', function () {
     });
 
 
-  })
+  });
+
+  describe('/movel/id/:id/author', function () {
+    it('post should success', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .post('/novel/id/' + id + '/author')
+          .send({
+            author: 'new author'
+          })
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
+    it('post should fail without author', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .post('/novel/id/' + id + '/author')
+          .send({})
+          .expect(400)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
+  });
+
+  describe('/novel/id/:id/body', function () {
+    it('post should success', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .put('/novel/id/' + id + '/body')
+          .send({
+            bodyid: id // only test, should be chapter id, not novel id
+          })
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
+    it('post should fail without body', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+
+        request
+          .put('/novel/id/' + id + '/body')
+          .send({})
+          .expect(400)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          })
+      })
+    });
+
+  });
 
 });
 
