@@ -4,7 +4,8 @@
   "description": "xs-restful",
   "main": "index.js",
   "scripts": {
-    "start": "node start.js"
+    "start": "node start.js",
+    "test": "mocha test"
   },
   "author": "tobe",
   "repository": {

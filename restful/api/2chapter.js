@@ -40,6 +40,7 @@ server.get('/chapter/all', function (req, res, next) {
   let id = '';
   if (!q.novelid) {
     errhelper.json400(new Error('novel id not exist'), res);
+    return next();
   } else {
     id = q.novelid;
   }

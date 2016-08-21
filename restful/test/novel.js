@@ -13,12 +13,12 @@ const Novel = require('../model/novel');
  */
 
 describe('novel test', function () {
-  // create 10 items in collection novel , for test
+  // create 10 items in collection Novel
+  // clear for everytime
   beforeEach(function (done) {
     Novel.remove({}, function (err) {
       if (err) console.log(err);
 
-      let nodes = [];
       for (let i = 0; i < 10; i++) {
         let param = {
           title: 'novel ' + i,
@@ -295,7 +295,7 @@ describe('novel test', function () {
   });
 
   describe('/novel/id/:id/body', function () {
-    it('post should success', function (done) {
+    it('put should success', function (done) {
       Novel.find({}, function (err, documents) {
         should.not.exist(err);
         let id = documents[0]._id;
@@ -313,7 +313,7 @@ describe('novel test', function () {
       })
     });
 
-    it('post should fail without body', function (done) {
+    it('put should fail without body', function (done) {
       Novel.find({}, function (err, documents) {
         should.not.exist(err);
         let id = documents[0]._id;
