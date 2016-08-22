@@ -13,7 +13,7 @@ const Novel = require('../model/novel');
  */
 
 describe('novel test', function () {
-  // create 10 items in collection Novel
+  // create 10 items in Novel
   // clear for everytime
   beforeEach(function (done) {
     Novel.remove({}, function (err) {

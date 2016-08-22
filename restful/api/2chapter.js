@@ -75,6 +75,7 @@ server.get('chapter/count', function (req, res, next) {
   let id = '';
   if (!q.novelid) {
     errhelper.json400(new Error('novel id not exist'), res);
+    return next();
   } else {
     id = q.novelid;
   }
@@ -104,6 +105,7 @@ server.get('/chapter/find', function (req, res, next) {
   let index = 1;
   if (!q.novelid) {
     errhelper.json400(new Error('novelid not exist'), res);
+    return next();
   } else {
     id = q.novelid;
   }
@@ -126,19 +128,25 @@ server.get('/chapter/find', function (req, res, next) {
   return next();
 });
 /**
- * 根据章节id, 返回章节
- * ?id=
+ * 根据章节id和小说id, 返回章节
+ * ?id=&novelid=
  */
 server.get('/chapter/findbyid', function (req, res, next) {
   let q = req.query;
   let id = '';
+  let novelid = '';
   if (!q.id) {
     errhelper.json400(new Error('id not exist'), res);
+    return next();
+  } else if (!q.novelid) {
+    errhelper.json400(new Error('novelid not exist'), res);
+    return next();
   } else {
     id = q.id;
+    novelid = q.novelid;
   }
 
-  let Chapter = mongoose.model('Chapter', ChapterSchema, id);
+  let Chapter = mongoose.model('Chapter', ChapterSchema, novelid);
 
   Chapter.findById(id, function (err, document) {
     if (err) errhelper.json500(err, res);
