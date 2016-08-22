@@ -1,9 +1,16 @@
 // config
-var baseNovel = '/api/novel';
-var baseChapter = '/api/chapter'
+var baseNovel = '';
+var baseChapter = '';
 
 // var $ = require('jquery');
 $(document).ready(function () {
+  if (window.location.hostname == 'localhost') {
+    baseNovel = 'http://localhost:8008/novel';
+    baseChapter = 'http://localhost:8008/chapter';
+  } else {
+    baseNovel = '/api/novel';
+    baseChapter = '/api/chapter';
+  }
   // add novel list
   switch (window.location.pathname) {
     case '/':
@@ -51,7 +58,7 @@ function loadChapter() {
       $('#novel').text(data.title);
     })
 
-  $.ajax({ 
+  $.ajax({
     url: baseChapter + '/all?limit=9999&skip=0&novelid=' + id,
     dataType: 'json',
     method: 'GET',
@@ -94,7 +101,7 @@ function loadContent() {
   $('.pager .next a').attr('href', base + (Number(query.index) + 1))
 
 
-  $.ajax({ 
+  $.ajax({
     url: baseChapter + '/find?novelid=' + query.novelid + '&index=' + query.index,
     dataType: 'json',
     method: 'GET',
