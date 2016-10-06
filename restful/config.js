@@ -9,7 +9,7 @@ let server = restify.createServer({
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser({
-  maxBodySize: 0,
+  maxBodySize: 10*1024*1024,  // bytes = 10m
   mapParams: true,
   mapFiles: true,
   overrideParams: true,

@@ -1,6 +1,7 @@
 {
   "globalDependencies": {
     "cheerio": "registry:dt/cheerio#0.17.0+20160407085313",
+    "express": "registry:dt/express#4.0.0+20160708185218",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
     "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "mongoose": "registry:dt/mongoose#3.8.5+20160629014609",

@@ -1,10 +1,10 @@
 {
-  "name": "xs-restful",
+  "name": "xs-restful-express",
   "version": "1.0.0",
-  "description": "xs-restful",
+  "description": "xs-restful-express",
   "main": "start.js",
   "scripts": {
-    "start": "node start.js",
+    "start": "node ./bin/www",
     "test": "mocha test"
   },
   "author": "tobe",
@@ -14,9 +14,14 @@
   },
   "license": "ISC",
   "dependencies": {
-    "bunyan": "^1.8.1",
-    "mongoose": "^4.5.3",
-    "restify": "^4.1.1"
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "jade": "~1.11.0",
+    "mongoose": "^4.5.10",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
     "mocha": "^3.0.2",

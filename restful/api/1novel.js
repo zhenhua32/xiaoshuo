@@ -65,7 +65,7 @@ server.get('/novel/id/:id', function (req, res, next) {
 });
 
 /**
- * 302, 重定向到 /novel/id/:id
+ * 301永远重定向, 重定向到 /novel/id/:id
  */
 server.get('/novel/id/:id/', function (req, res, next) {
   res.redirect(301, '/nove/id/:id', next);
