@@ -162,6 +162,7 @@ server.get('/chapter/findbyid', function (req, res, next) {
 
 });
 
+// 下面未使用, 未测试
 server.get('/chapter/id/:id', function (req, res, next) {
 
   let Chapter = mongoose.model('Chapter', ChapterSchema, req.params.id);

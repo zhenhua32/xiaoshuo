@@ -308,84 +308,84 @@ describe('chapter test', function () {
 
   });
 
-  // describe('/chapter/findbyid', function () {
-  //   it('get should success', function (done) {
-  //     Novel.find({}, function (err, documents) {
-  //       should.not.exist(err);
-  //       let id = documents[0]._id;
-  //       id = String(id);
-  //       let Chapter = mongoose.model('Chapter', ChapterSchema, id);
+  describe('/chapter/findbyid', function () {
+    it('get should success', function (done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+        id = String(id);
+        let Chapter = mongoose.model('Chapter', ChapterSchema, id);
 
-  //       Chapter.find({}, function (err, documents) {
-  //         should.not.exist(err);
-  //         let cid = documents[0]._id;
-  //         cid = String(cid);
+        Chapter.find({}, function (err, documents) {
+          should.not.exist(err);
+          let cid = documents[0]._id;
+          cid = String(cid);
 
-  //         request
-  //           .get('/chapter/findbyid?id=' + cid+'&novelid='+id)
-  //           .expect(200)
-  //           .end(function (err, res) {
-  //             should.not.exist(err);
-  //             (res.body._id).should.equal(cid);
-  //             (res.body.novel).should.equal(id);
-  //             done();
-  //           })
-  //       })
-  //     })
-  //   });
+          request
+            .get('/chapter/findbyid?id=' + cid+'&novelid='+id)
+            .expect(200)
+            .end(function (err, res) {
+              should.not.exist(err);
+              (res.body._id).should.equal(cid);
+              (res.body.novel).should.equal(id);
+              done();
+            })
+        })
+      })
+    });
 
-  //   it('get should fail without novelid', function(done) {
-  //     Novel.find({}, function (err, documents) {
-  //       should.not.exist(err);
-  //       let id = documents[0]._id;
-  //       id = String(id);
-  //       let Chapter = mongoose.model('Chapter', ChapterSchema, id);
+    it('get should fail without novelid', function(done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+        id = String(id);
+        let Chapter = mongoose.model('Chapter', ChapterSchema, id);
 
-  //       Chapter.find({}, function (err, documents) {
-  //         should.not.exist(err);
-  //         let cid = documents[0]._id;
-  //         cid = String(cid);
+        Chapter.find({}, function (err, documents) {
+          should.not.exist(err);
+          let cid = documents[0]._id;
+          cid = String(cid);
 
-  //         request
-  //           .get('/chapter/findbyid?id=' + cid)
-  //           .expect(400)
-  //           .end(function (err, res) {
-  //             should.not.exist(err);
-  //             done();
-  //           })
-  //       })
-  //     })
-  //   });
+          request
+            .get('/chapter/findbyid?id=' + cid)
+            .expect(400)
+            .end(function (err, res) {
+              should.not.exist(err);
+              done();
+            })
+        })
+      })
+    });
 
-  //   it('get should fail without id', function(done) {
-  //     Novel.find({}, function (err, documents) {
-  //       should.not.exist(err);
-  //       let id = documents[0]._id;
-  //       id = String(id);
-  //       let Chapter = mongoose.model('Chapter', ChapterSchema, id);
+    it('get should fail without id', function(done) {
+      Novel.find({}, function (err, documents) {
+        should.not.exist(err);
+        let id = documents[0]._id;
+        id = String(id);
+        let Chapter = mongoose.model('Chapter', ChapterSchema, id);
 
-  //       Chapter.find({}, function (err, documents) {
-  //         should.not.exist(err);
-  //         let cid = documents[0]._id;
-  //         cid = String(cid);
+        Chapter.find({}, function (err, documents) {
+          should.not.exist(err);
+          let cid = documents[0]._id;
+          cid = String(cid);
 
-  //         request
-  //           .get('/chapter/findbyid?novelid='+id)
-  //           .expect(400)
-  //           .end(function (err, res) {
-  //             should.not.exist(err);
-  //             done();
-  //           })
-  //       })
-  //     })
-  //   })
+          request
+            .get('/chapter/findbyid?novelid='+id)
+            .expect(400)
+            .end(function (err, res) {
+              should.not.exist(err);
+              done();
+            })
+        })
+      })
+    })
 
-  // });
+  });
 
-  // describe('/chapter/id/:id', function() {
-  //   it('get should success', function(done) {
-  //     this.skip();
-  //   })
-  // });
+  describe('/chapter/id/:id', function() {
+    it('get should success', function(done) {
+      this.skip();
+    })
+  });
 
 });

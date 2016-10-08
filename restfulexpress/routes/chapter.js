@@ -155,10 +155,9 @@ router.get('/findbyid', function (req, res, next) {
     }
   });
 
-  next();
-
 });
 
+// 下面未使用, 未测试
 router.get('/id/:id', function (req, res, next) {
 
   let Chapter = mongoose.model('Chapter', ChapterSchema, req.params.id);
@@ -172,12 +171,16 @@ router.get('/id/:id', function (req, res, next) {
         res.json(document)
       }
     }
-  });
-  next();
+  }); 
 });
 
 router.post('/id/:id', function (req, res, next) {
-  let p = req.params;
+  let p = {
+    index: req.body.index,
+    body: req.body.body,
+    novel: req.body.novel,
+    id: req.params.id
+  }
   if (!p.index || !p.body || !p.novel) next();
 
   let Chapter = mongoose.model('Chapter', ChapterSchema, p.id);
