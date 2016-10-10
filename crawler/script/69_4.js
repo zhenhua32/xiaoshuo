@@ -17,6 +17,9 @@ function save(novel, next) {
       setTimeout(function () {
         // index 从1开始
         _69shu.saveChapter(novel.list[index].url, index + 1, novel.id)
+          .catch(function (reason) {
+            console.log(reason);
+          });
         index++;
 
         // process.stdout.write(index / novel.list.length + ' \033[0G');
@@ -34,8 +37,8 @@ function save(novel, next) {
 let count = 0;
 function next() {
   console.log('start next')
-  if(count < array.length-1) {
-    count ++;
+  if (count < array.length - 1) {
+    count++;
     save(array[count], next);
   } else {
     console.log('done');
