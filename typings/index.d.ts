@@ -1,3 +1,4 @@
+/// <reference path="globals/async/index.d.ts" />
 /// <reference path="globals/cheerio/index.d.ts" />
 /// <reference path="globals/express/index.d.ts" />
 /// <reference path="globals/jquery/index.d.ts" />

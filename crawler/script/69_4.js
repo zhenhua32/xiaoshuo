@@ -4,6 +4,7 @@ const walk = require('../app/walk.js');
 const _69shu = require('../app/69shu.js');
 const fs = require('fs');
 
+// {id: id, list: [{title: title, url: url}]} 的数组
 let array = JSON.parse(
   fs.readFileSync('./info/69_3.json', {
     encoding: 'utf8'

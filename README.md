@@ -59,20 +59,17 @@ Restful 服务器主要是负责提供数据存储
 ## 进度
 
 * crawler 部分
-  * 正在进行网站选择
-  * 已经爬取50部小说
 * restful 部分
-  * 基础模型 novel 已搭建
-  * 基础模型 chapter 已搭建
-  * 完成一部分 novel 的 rest 方法
-  * 完成一部分 chapter 的 rest 方法
 * ui 部分
 
 
+## 估计要弃坑了
 
-说真的, 有点激动人心, 做大项目, 万一最后迎娶白富美呢.
-
-反正找不到工作, 随便折腾.
-
+* 已经完成了简单的爬虫, 只针对一个网站
+* restful写了两套, 分别是基于restify和express框架的
+* 界面也有两套, 分别是ui目录下的基于react和uibootstrap目录下的基于bootstrap.
+  react的界面完全没有css加成, 丑的不忍直视, 更多对react功能性的认识. 
+  bootstrap天生好看点, 没css加成也看的过去.
+* 言尽于此, 有机会再续
 
 

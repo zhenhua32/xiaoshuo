@@ -2,5 +2,6 @@
 {
     "editor.wrappingColumn": 100,
     "html.format.wrapLineLength": 70,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
 }

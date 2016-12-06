@@ -1,5 +1,6 @@
 {
   "globalDependencies": {
+    "async": "registry:dt/async#2.0.1+20160804113311",
     "cheerio": "registry:dt/cheerio#0.17.0+20160407085313",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
